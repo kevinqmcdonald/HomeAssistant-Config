@@ -1,0 +1,252 @@
+######################################################################
+# -------------------------------------------------------------------
+# Bedroom Scenes - Home Assistant scene settings.
+#  Defines the Bedroom Scenes state.
+# -------------------------------------------------------------------
+######################################################################
+- name: "Primary Bedroom Watching TV"
+  id: 0faaab51-40a0-4b5b-9a83-3727d77950d1
+  icon: mdi:bed
+  entities:
+    light.master_bed_sleepnumber_master_bed_light_1:
+      supported_color_modes:
+        - onoff
+      color_mode:
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Light 1
+      supported_features: 0
+      state: "off"
+    number.master_bed_sleepnumber_master_bed_right_head_position:
+      min: 0
+      max: 100
+      step: 1
+      mode: auto
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Right Head Position
+      state: "59.0"
+    number.master_bed_sleepnumber_master_bed_right_foot_position:
+      min: 0
+      max: 100
+      step: 1
+      mode: auto
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Right Foot Position
+      state: "58.0"
+    number.master_bed_sleepnumber_master_bed_left_head_position:
+      min: 0
+      max: 100
+      step: 1
+      mode: auto
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Left Head Position
+      state: "59.0"
+    number.master_bed_sleepnumber_master_bed_left_foot_position:
+      min: 0
+      max: 100
+      step: 1
+      mode: auto
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Left Foot Position
+      state: "58.0"
+    media_player.primary_bedroom_tv:
+      source_list:
+        - TV
+        - HDMI
+      device_class: tv
+      friendly_name: Primary Bedroom TV
+      supported_features: 24509
+      volume_level: 0.14
+      is_volume_muted: false
+      state: "on"
+    fan.primary_bedroom_tower_fan:
+      preset_modes:
+        - Sleep
+        - Auto
+        - Natural
+        - Normal
+      oscillating: false
+      percentage: 33
+      percentage_step: 1
+      preset_mode: Normal
+      friendly_name: Bedroom Fan
+      supported_features: 59
+      state: "on"
+    switch.primary_bedroom_tower_fan_display_adaptive:
+      icon: mdi:brightness-auto
+      friendly_name: Bedroom Fan Display Adaptive
+      state: "on"
+    switch.primary_bedroom_tower_fan_panel_sound:
+      icon: mdi:volume-mute
+      friendly_name: Bedroom Fan Panel Sound
+      state: "off"
+    light.bedroom_light_1:
+      friendly_name: Bedroom Light 1
+      state: "on"
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 2700
+      hs_color:
+        - 28.395
+        - 65.723
+      rgb_color:
+        - 255
+        - 167
+        - 87
+      xy_color:
+        - 0.525
+        - 0.388
+    light.bedroom_light_2:
+      friendly_name: Bedroom Light 2
+      state: "on"
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 2700
+      hs_color:
+        - 28.395
+        - 65.723
+      rgb_color:
+        - 255
+        - 167
+        - 87
+      xy_color:
+        - 0.525
+        - 0.388
+        
+- name: "Primary Bedroom Winding Down"
+  id: 36ced123-5ba9-4e1e-8b12-18f5a8a205de
+  icon: mdi:bed
+  entities:
+    number.master_bed_sleepnumber_master_bed_right_head_position:
+      min: 0
+      max: 100
+      step: 1
+      mode: auto
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Right Head Position
+      state: "46.0"
+    number.master_bed_sleepnumber_master_bed_right_foot_position:
+      min: 0
+      max: 100
+      step: 1
+      mode: auto
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Right Foot Position
+      state: "41.0"
+    number.master_bed_sleepnumber_master_bed_left_head_position:
+      min: 0
+      max: 100
+      step: 1
+      mode: auto
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Left Head Position
+      state: "46.0"
+    number.master_bed_sleepnumber_master_bed_left_foot_position:
+      min: 0
+      max: 100
+      step: 1
+      mode: auto
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Left Foot Position
+      state: "41.0"
+    light.bedroom_light_1:
+      friendly_name: Bedroom Light 1
+      state: "on"
+      color_mode: hs
+      brightness: 128
+      hs_color:
+        - 0
+        - 100
+      rgb_color:
+        - 255
+        - 0
+        - 0
+      xy_color:
+        - 0.701
+        - 0.299
+    light.bedroom_light_2:
+      friendly_name: Bedroom Light 2
+      state: "on"
+      color_mode: hs
+      brightness: 128
+      hs_color:
+        - 0
+        - 100
+      rgb_color:
+        - 255
+        - 0
+        - 0
+      xy_color:
+        - 0.701
+        - 0.299
+
+- name: "Primary Bedroom Bedtime"
+  id: 7b42d97f-5d59-45fc-b3a6-aaa4edb8e8ab
+  icon: mdi:bed
+  entities:
+    number.master_bed_sleepnumber_master_bed_right_head_position:
+      min: 0
+      max: 100
+      step: 1
+      mode: auto
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Right Head Position
+      state: "0.0"
+    number.master_bed_sleepnumber_master_bed_right_foot_position:
+      min: 0
+      max: 100
+      step: 1
+      mode: auto
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Right Foot Position
+      state: "0.0"
+    number.master_bed_sleepnumber_master_bed_left_head_position:
+      min: 0
+      max: 100
+      step: 1
+      mode: auto
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Left Head Position
+      state: "0.0"
+    number.master_bed_sleepnumber_master_bed_left_foot_position:
+      min: 0
+      max: 100
+      step: 1
+      mode: auto
+      icon: mdi:bed
+      friendly_name: Primary Bed SleepNumber Master Bed Left Foot Position
+      state: "0.0"
+    fan.primary_bedroom_tower_fan:
+      preset_modes:
+        - Sleep
+        - Auto
+        - Natural
+        - Normal
+      oscillating: false
+      percentage: 66
+      percentage_step: 1
+      preset_mode: Normal
+      friendly_name: Bedroom Fan
+      supported_features: 59
+      state: "on"
+    switch.primary_bedroom_tower_fan_display_adaptive:
+      icon: mdi:brightness-auto
+      friendly_name: Bedroom Fan Display Adaptive
+      state: "on"
+    switch.primary_bedroom_tower_fan_panel_sound:
+      icon: mdi:volume-mute
+      friendly_name: Bedroom Fan Panel Sound
+      state: "off"
+    light.bedroom_light_1:
+      friendly_name: Bedroom Light 1
+      state: "off"
+    light.bedroom_light_2:
+      friendly_name: Bedroom Light 2
+      state: "off"
+    media_player.primary_bedroom_tv:
+      source_list:
+        - TV
+        - HDMI
+      device_class: tv
+      friendly_name: Primary Bedroom TV
+      supported_features: 24509
+      state: "off"

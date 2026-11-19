@@ -1,0 +1,29 @@
+# An * ensures that everything will be ignored by default
+*
+
+# Explicit folder whitelist
+!packages/
+!automation/
+!themes/
+!blueprints/
+!blueprints/**
+!sensor/
+!script/
+!scene/
+
+# Explicit file whitelist
+!*.yaml
+!.gitignore
+!.gitkeep
+!*.md
+
+# Specific folder ignores
+custom_components/
+www/community/
+blueprints/**/homeassistant/
+
+# Specific file ignores
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+*.local.md

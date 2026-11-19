@@ -1,0 +1,57 @@
+######################################################################
+# -------------------------------------------------------------------
+# Media Players - Sensors, helpers, automations, scripts, and Lovelace assets
+#  for Home Assistant Media Players
+# -------------------------------------------------------------------
+######################################################################
+media_player:
+  - platform: group
+    name: "Home Speakers"
+    unique_id: home_speakers
+    entities:
+      - media_player.primary_bedroom_echo_show_2
+      - media_player.kitchen_echo_dot
+      - media_player.office_echo_dot_2
+
+  - platform: group
+    name: "TVs"
+    unique_id: home_tvs
+    entities:
+      - media_player.primary_bedroom_tv
+      - media_player.living_room_tv
+
+template:
+  - binary_sensor:
+      - name: "Primary bedroom speaker playing music"
+        unique_id: primary_bedroom_speaker_playing_music
+        icon: mdi:music
+        device_class: "sound"
+        state: >
+          {{ is_state("media_player.primary_bedroom_echo_show_2", "playing") and 
+          state_attr("media_player.primary_bedroom_echo_show_2", "media_title") is not none }}
+  - binary_sensor:
+      - name: "Office speaker playing music"
+        unique_id: office_speaker_playing_music
+        icon: mdi:music
+        device_class: "sound"
+        state: >
+          {{ is_state("media_player.office_echo_dot_2", "playing") and
+          state_attr("media_player.office_echo_dot_2", "media_title") is not none }}
+  - binary_sensor:
+      - name: "Kitchen speaker playing music"
+        unique_id: kitchen_speaker_playing_music
+        icon: mdi:music
+        device_class: "sound"
+        state: >
+          {{ is_state("media_player.kitchen_echo_dot", "playing") and 
+          state_attr("media_player.kitchen_echo_dot", "media_title") is not none }}
+
+  - binary_sensor:
+      - name: "Music playing anywhere"
+        unique_id: music_playing_anywhere
+        icon: mdi:music
+        device_class: "sound"
+        state: >
+          {{ is_state("binary_sensor.primary_bedroom_speaker_playing_music", "on") or
+            is_state("binary_sensor.office_speaker_playing_music", "on") or
+            is_state("binary_sensor.kitchen_speaker_playing_music", "on") }}

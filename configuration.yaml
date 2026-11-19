@@ -1,0 +1,40 @@
+######################################################################
+# -------------------------------------------------------------------
+# Home Assistant Configuration - Core config
+#  Main configuration file for Home Assistant setup.
+# -------------------------------------------------------------------
+######################################################################
+
+homeassistant:
+  packages: !include_dir_named packages
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+frontend:
+  # Load frontend themes from the themes folder
+  themes: !include_dir_merge_named themes
+  # Card Mod module
+  extra_module_url:
+    - /hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524421
+
+# Logging configuration
+logger: !include logger.yaml
+
+# Recorder configuration
+recorder: !include recorder.yaml
+
+# Sensor configurations
+sensor: !include_dir_merge_list sensor
+
+# Scripts configurations
+script ui: !include scripts.yaml
+script yaml: !include_dir_merge_named script
+
+# Automations configuration
+automation ui: !include automations.yaml
+automation yaml: !include_dir_merge_list automation
+
+# Scenes configuration
+scene ui: !include scenes.yaml
+scene yaml: !include_dir_merge_list scene

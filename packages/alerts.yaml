@@ -1,0 +1,26 @@
+######################################################################
+# -------------------------------------------------------------------
+# Alerts - Sensors and helpers for rendering alerts
+# -------------------------------------------------------------------
+######################################################################
+template:
+  - binary_sensor:
+      - name: "Package arriving today"
+        unique_id: package_arriving_today
+        device_class: "occupancy"
+        icon: mdi:package-variant-closed
+        state: >
+          {{ (states('sensor.package_tracker_mail_packages_in_transit') |
+          int(0)) > 0 }}
+
+      - name: "Car gas low"
+        unique_id: car_gas_low
+        icon: mdi:gas-station
+        state: >
+          {{ (states('sensor.audi_car_tank_level') | int(0)) <= 25 }}
+
+      - name: "Oven is running"
+        unique_id: oven_running
+        icon: mdi:stove
+        state: >
+          {{ is_state('sensor.oven_machine_state', 'running') }}

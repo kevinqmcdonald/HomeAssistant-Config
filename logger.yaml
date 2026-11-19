@@ -1,0 +1,48 @@
+# -------------------------------------------------------------------
+# Logger Configuration for Home Assistant - This file controls the logging levels for various.
+#  Defines Home Assistant YAML configuration for Logger Configuration for Home Assistant.
+# -------------------------------------------------------------------
+# Notes: This file controls the logging levels for various
+# Notes: components of Home Assistant. You can filter log entries by
+# Notes: adjusting the severity levels for each component
+# Notes: Log Severities (in order of increasing severity):
+# Notes: notset, debug, info, warn, warning, error, fatal, critical
+######################################################################
+default: info
+logs:
+  custom_components.alexa_media: error
+  custom_components.hacs: error
+  hacs: error
+  homeassistant.core: error
+  homeassistant.config_entries: error
+  homeassistant.components.automation: warn
+  homeassistant.components.binary_sensor: error
+  homeassistant.components.climate.nest: warn
+  homeassistant.components.device_tracker: error
+  homeassistant.components.discovery: warn
+  homeassistant.components.feedreader: error
+  homeassistant.components.history: error
+  homeassistant.components.http: warn
+  homeassistant.components.ipp: critical
+  homeassistant.components.logbook: error
+  homeassistant.components.media_player: info
+  homeassistant.components.mqtt: error
+  homeassistant.components.mqtt.discovery: critical
+  homeassistant.components.persistent_notification: critical
+  homeassistant.components.template: warn
+  homeassistant.components.rest.sensor: critical
+  homeassistant.components.recorder: error
+  homeassistant.components.sensor.pi_hole: critical
+  homeassistant.components.sensor.rest: info
+  homeassistant.components.sensor.darksky: warn
+  homeassistant.components.tplink.button: error
+  homeassistant.components.unifi: error
+  homeassistant.components.device_tracker.unifi: error
+  homeassistant.components.switch.unifi: error
+  homeassistant.components.zwave: warn
+  homeassistant.exceptions: info
+  homeassistant.helpers.script: warn
+  homeassistant.helpers.entity: critical
+  homeassistant.loader: warn
+  homeassistant.components.websocket_api: error
+  root: warn

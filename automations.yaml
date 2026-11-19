@@ -1,0 +1,8 @@
+######################################################################
+# Automations Home Assistant YAML - Home Assistant YAML configuration.
+#  Defines Home Assistant YAML configuration for Automations Home Assistant YAML.
+# -------------------------------------------------------------------
+######################################################################
+# Intentionally left empty to preserve compatibility with automation creation through the UI
+# See /automation folder for automation definitions
+[]

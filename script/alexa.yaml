@@ -1,0 +1,8 @@
+######################################################################
+# Alexa Notifications Script - This script allows you to send notifications to your Alexa devices using the Alexa Media Player integration.
+######################################################################
+send_notification_to_alexa:
+  use_blueprint:
+    path: TheAppleFreak/notify_alexa.yaml
+  alias: Send Notification to Alexa
+  description: "This script allows you to send notifications to your Alexa devices using the Alexa Media Player integration."

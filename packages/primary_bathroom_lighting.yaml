@@ -1,0 +1,113 @@
+######################################################################
+# -------------------------------------------------------------------
+# Primary Bathroom Lighting
+#  Hue color downlights driven by an Inovelli Blue paddle.
+#
+#  Hardware:
+#   - Inovelli VZM31-SN (ZHA, IEEE 5c:3a:a2:ff:fe:4f:9b:10) in Smart
+#     Bulb Mode, bound from endpoint 2 (OnOff + Level) to Zigbee
+#     group 2 "Primary Bathroom Lights".
+#   - 4x Philips Hue LCD007 downlights (ZHA), 2000-6535K + color,
+#     all members of Zigbee group 2 at endpoint 11.
+#
+#  Division of labour:
+#   - On/off and hold-to-dim are handled ENTIRELY by the Zigbee group
+#     binding. Do not add HA automations for tap-up/tap-down/hold -
+#     they fight the binding's own Move commands and cause stuttering.
+#   - Multi-tap is NOT carried over the binding (it reaches the
+#     coordinator via the 0xfc31 manufacturer cluster), so double-tap
+#     is the correct hook for scenes.
+#   - Colour can NEVER come from the binding: endpoints 2 and 3 expose
+#     no Color cluster (0x0300) output. Colour only happens via the
+#     scenes below.
+#
+#  The switch's own light entity (light.primary_bathroom_lights) is a
+#  phantom dimmer in Smart Bulb Mode. Nothing here reads it, and it
+#  should stay un-exposed to Alexa.
+#
+#  The all-bulbs group is the ZHA group entity, not a YAML light group:
+#  it sends one Zigbee groupcast instead of four unicasts, so the
+#  bulbs move together instead of staggering.
+# -------------------------------------------------------------------
+######################################################################
+
+scene:
+  - name: "Primary Bathroom Standard"
+    id: primary_bathroom_standard
+    icon: mdi:lightbulb-on
+    entities:
+      light.primary_bathroom_main_light_1:
+        state: "on"
+        brightness: 255
+        color_temp_kelvin: 2700
+      light.primary_bathroom_main_light_2:
+        state: "on"
+        brightness: 255
+        color_temp_kelvin: 2700
+      light.primary_bathroom_bathtub_light:
+        state: "on"
+        brightness: 255
+        color_temp_kelvin: 2700
+      light.primary_bathroom_shower_light:
+        state: "on"
+        brightness: 255
+        color_temp_kelvin: 2700
+
+  - name: "Primary Bathroom Relaxation"
+    id: primary_bathroom_relaxation
+    icon: mdi:weather-night
+    entities:
+      light.primary_bathroom_main_light_1:
+        state: "on"
+        brightness: 51          # ~15%
+        color_temp_kelvin: 2200
+      light.primary_bathroom_main_light_2:
+        state: "on"
+        brightness: 51
+        color_temp_kelvin: 2200
+      light.primary_bathroom_bathtub_light:
+        state: "on"
+        brightness: 51
+        color_temp_kelvin: 2200
+      light.primary_bathroom_shower_light:
+        state: "on"
+        brightness: 102         # ~40%
+        rgb_color: [255, 0, 0]
+
+automation:
+  # ---- Paddle: double-tap up = Standard ----------------------------
+  # Safe alongside the binding: the switch's native "double tap to full
+  # brightness" feature is disabled (double_tap_up_enabled = off), so
+  # nothing is groupcast on double-tap and this is the only actor.
+  - alias: "Primary Bathroom double-tap up activates Standard"
+    id: 623b902e-d092-44cb-9643-34dca5f6c367
+    mode: single
+    triggers:
+      - trigger: event
+        event_type: zha_event
+        event_data:
+          device_ieee: "5c:3a:a2:ff:fe:4f:9b:10"
+          command: button_2_double
+    actions:
+      - action: scene.turn_on
+        target:
+          entity_id: scene.primary_bathroom_standard
+        data:
+          transition: 1
+
+  # ---- Paddle: double-tap down = Relaxation ------------------------
+  - alias: "Primary Bathroom double-tap down activates Relaxation"
+    id: 1586c5d8-16f6-4a02-a681-f94b53e0c713
+    mode: single
+    triggers:
+      - trigger: event
+        event_type: zha_event
+        event_data:
+          device_ieee: "5c:3a:a2:ff:fe:4f:9b:10"
+          command: button_1_double
+    actions:
+      - action: scene.turn_on
+        target:
+          entity_id: scene.primary_bathroom_relaxation
+        data:
+          transition: 2

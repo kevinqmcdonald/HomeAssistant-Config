@@ -1,0 +1,37 @@
+Warm Home:
+  card-mod-theme: 'Warm Home'
+  primary-color: "#c47a3a"
+  accent-color: "#d4874a"
+  primary-background-color: "#faf7f2"
+  secondary-background-color: "#f2ede4"
+  card-background-color: "#fefcf8"
+  primary-text-color: "#2d1f0e"
+  secondary-text-color: "#8a7060"
+  disabled-text-color: "#c8b8a8"
+  divider-color: "#e8ddd0"
+
+  sidebar-background-color: "#f2ede4"
+  sidebar-selected-icon-color: "#c47a3a"
+  sidebar-icon-color: "#a0887a"
+
+  state-on-color: "#c47a3a"
+  state-off-color: "#ddd0c0"
+
+  primary-font-family: "'Lora', 'Georgia', serif"
+
+  ha-card-border-radius: "18px"
+  ha-card-box-shadow: "0 2px 16px rgba(100,60,20,0.08)"
+  ha-card-border-color: "rgba(180,130,80,0.15)"
+
+  # Card Mod Styles
+  card-mod-card: |
+    ha-card {
+      background: #fefcf8 !important;
+      border: 1px solid rgba(180,130,80,0.12) !important;
+      border-radius: 18px !important;
+      box-shadow: 0 2px 16px rgba(100,60,20,0.08) !important;
+      transition: box-shadow 0.2s ease !important;
+    }
+    ha-card:hover {
+      box-shadow: 0 4px 24px rgba(100,60,20,0.12) !important;
+    }

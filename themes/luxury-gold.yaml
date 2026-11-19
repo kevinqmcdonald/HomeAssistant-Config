@@ -1,0 +1,42 @@
+Luxury Gold:
+  card-mod-theme: "Luxury Gold"
+  primary-color: "#c9a84c"
+  accent-color: "#d4b060"
+  primary-background-color: "#0d0f18"
+  secondary-background-color: "#131520"
+  card-background-color: "#161a28"
+  primary-text-color: "#f0e8d0"
+  secondary-text-color: "#8a7a60"
+  disabled-text-color: "#3a3020"
+  divider-color: "#2a2416"
+
+  sidebar-background-color: "#0d0f18"
+  sidebar-selected-icon-color: "#c9a84c"
+  sidebar-icon-color: "#5a5040"
+
+  state-on-color: "#c9a84c"
+  state-off-color: "#2a2416"
+
+  primary-font-family: "'Cormorant Garamond', 'Playfair Display', Georgia, serif"
+
+  ha-card-border-radius: "4px"
+  ha-card-box-shadow: "0 4px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(201,168,76,0.1)"
+  ha-card-border-color: "rgba(201,168,76,0.15)"
+
+  # Card mod themes
+  card-mod-card: |
+    ha-card {
+      background: #161a28 !important;
+      border: 1px solid rgba(201,168,76,0.15) !important;
+      border-radius: 4px !important;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(201,168,76,0.1) !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+    ha-card::after {
+      content: '' !important;
+      position: absolute !important;
+      bottom: 0 !important; left: 0 !important; right: 0 !important;
+      height: 1px !important;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent) !important;
+    }

@@ -1,0 +1,98 @@
+######################################################################
+# -------------------------------------------------------------------
+# Security - Sensors, helpers, automations, scripts, and Lovelace assets
+#  for home security system
+# -------------------------------------------------------------------
+######################################################################
+binary_sensor:
+  - platform: group
+    name: "Window entry sensors"
+    unique_id: window_entry_sensors
+    device_class: opening
+    entities:
+      - binary_sensor.half_bathroom_window_sensor
+      - binary_sensor.dining_room_window_sensor_1
+      - binary_sensor.dining_room_window_sensor_2
+      - binary_sensor.dining_room_window_sensor_3
+      - binary_sensor.dining_room_window_sensor_4
+      - binary_sensor.kitchen_window_sensor_1
+      - binary_sensor.kitchen_window_sensor_2
+      - binary_sensor.kitchen_window_sensor_3
+      - binary_sensor.primary_bedroom_window_sensor
+      - binary_sensor.primary_bedroom_window_sensor_2
+      - binary_sensor.living_room_window_sensor_1
+      - binary_sensor.living_room_window_sensor_2
+
+  - platform: group
+    name: "Door entry sensors"
+    unique_id: door_entry_sensors
+    device_class: opening
+    entities:
+      - binary_sensor.front_door_entry_sensor
+      - binary_sensor.back_door_entry_sensor
+
+sensor:
+  - platform: group
+    name: "Minimum sensor battery"
+    type: min
+    device_class: battery
+    entities:
+      - sensor.front_door_entry_sensor_battery
+      - sensor.back_door_entry_sensor_battery
+      - sensor.backyard_gate_sensor_battery
+      - sensor.half_bathroom_window_sensor_battery
+      - sensor.dining_room_window_sensor_1_battery
+      - sensor.dining_room_window_sensor_2_battery
+      - sensor.dining_room_window_sensor_3_battery
+      - sensor.dining_room_window_sensor_4_battery
+      - sensor.kitchen_window_sensor_1_battery
+      - sensor.kitchen_window_sensor_2_battery
+      - sensor.kitchen_window_sensor_3_battery
+      - sensor.primary_bedroom_window_sensor_battery
+      - sensor.primary_bedroom_window_sensor_2_battery
+      - sensor.living_room_window_sensor_1_battery
+      - sensor.living_room_window_sensor_2_battery
+
+  - platform: group
+    name: "Minimum keypad battery"
+    type: min
+    device_class: battery
+    entities:
+      - sensor.entryway_alarm_keypad_battery
+      - sensor.living_room_alarm_keypad_battery
+
+template:
+  - binary_sensor:
+      - name: "Is any entry sensor open"
+        unique_id: any_entry_sensor_open
+        device_class: opening
+        icon: mdi:lock-open
+        state: >
+          {{ is_state('binary_sensor.door_entry_sensors', 'on') or
+          is_state('binary_sensor.window_entry_sensors', 'on') or
+          is_state('binary_sensor.backyard_gate_sensor', 'on') }}
+
+  - binary_sensor:
+      - name: "Is any entry sensor battery low"
+        unique_id: any_entry_sensor_battery_low
+        device_class: battery
+        icon: mdi:battery-alert
+        state: >
+          {{ states("sensor.minimum_sensor_battery_2") | int <= 25 }}
+
+  - binary_sensor:
+      - name: "Is any keypad battery low"
+        unique_id: any_keypad_battery_low
+        device_class: battery
+        icon: mdi:battery-alert
+        state: >
+          {{ states("sensor.minimum_keypad_battery_2") | int <= 25 }}
+
+  - binary_sensor:
+      - name: "Is any security device battery low"
+        unique_id: any_security_device_battery_low
+        device_class: battery
+        icon: mdi:battery-alert
+        state: >
+          {{ (states("sensor.minimum_sensor_battery_2") | int <= 25) or
+             (states("sensor.minimum_keypad_battery_2") | int <= 25) }}

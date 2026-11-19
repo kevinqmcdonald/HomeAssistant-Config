@@ -1,0 +1,8 @@
+######################################################################
+# Scenes Home Assistant YAML - Home Assistant YAML configuration.
+#  Defines Home Assistant YAML configuration for Scenes Home Assistant YAML.
+# -------------------------------------------------------------------
+######################################################################
+# Intentionally left empty to preserve compatibility with scene creation through the UI
+# See /scene folder for scene definitions
+[]

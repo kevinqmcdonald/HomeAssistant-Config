@@ -1,0 +1,9 @@
+######################################################################
+# Date Time Sensor - Home Assistant sensor configuration.
+#  Defines sensors for Date Time Sensor.
+# -------------------------------------------------------------------
+######################################################################
+- platform: time_date
+  display_options:
+    - 'time'
+    - 'date'

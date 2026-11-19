@@ -1,0 +1,38 @@
+Soft Pastel:
+  card-mod-theme: "Soft Pastel"
+  primary-color: "#b388c8"
+  accent-color: "#a0c8b0"
+  primary-background-color: "#faf9ff"
+  secondary-background-color: "#f2f0fa"
+  card-background-color: "#ffffff"
+  primary-text-color: "#3a2f4a"
+  secondary-text-color: "#8878a0"
+  disabled-text-color: "#c8c0d8"
+  divider-color: "#ece8f4"
+
+  sidebar-background-color: "#f2f0fa"
+  sidebar-selected-icon-color: "#b388c8"
+  sidebar-icon-color: "#b0a8c0"
+
+  state-on-color: "#b388c8"
+  state-off-color: "#ddd8ea"
+
+  primary-font-family: "'Nunito', 'Quicksand', sans-serif"
+
+  ha-card-border-radius: "22px"
+  ha-card-box-shadow: "0 4px 16px rgba(100,80,140,0.08)"
+  ha-card-border-color: "transparent"
+
+  # Card mod styles
+  card-mod-card: |
+    ha-card {
+      background: #ffffff !important;
+      border: none !important;
+      border-radius: 22px !important;
+      box-shadow: 0 4px 16px rgba(100,80,140,0.08) !important;
+      transition: all 0.2s ease !important;
+    }
+    ha-card:hover {
+      box-shadow: 0 6px 24px rgba(100,80,140,0.14) !important;
+      transform: translateY(-2px) !important;
+    }

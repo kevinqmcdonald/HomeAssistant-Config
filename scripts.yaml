@@ -1,0 +1,7 @@
+######################################################################
+# Scripts Home Assistant YAML - Home Assistant YAML configuration.
+#  Defines Home Assistant YAML configuration for Scripts Home Assistant YAML.
+######################################################################
+# Intentionally left empty to preserve compatibility with script creation through the UI
+# See /script folder for script definitions
+{}

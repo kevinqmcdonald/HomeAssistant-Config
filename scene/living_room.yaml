@@ -1,0 +1,67 @@
+######################################################################
+# -------------------------------------------------------------------
+# Living Room Scenes - Home Assistant scene settings.
+#  Defines the Living Room Scenes state.
+# -------------------------------------------------------------------
+######################################################################
+- name: Watching TV
+  id: 336dfbb6-1486-4e91-9e58-a31705d8067a
+  icon: mdi:television
+  entities:
+    light.living_room_light:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 6500
+      supported_color_modes:
+        - color_temp
+        - hs
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: Living Room Light
+      supported_features: 32
+      state: "off"
+    light.living_room_reading_light:
+      friendly_name: Reading Light
+      state: "on"
+    light.tv_lights:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 9000
+      effect_list:
+        - none
+        - sunrise
+        - sunset
+        - movie
+        - dating
+        - romantic
+        - twinkle
+        - candlelight
+        - snowflake
+        - energetic
+        - breathe
+        - crossing
+      supported_color_modes:
+        - color_temp
+        - rgb
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: TV Lights
+      supported_features: 4
+      state: "off"
+    media_player.living_room_tv:
+      source_list:
+        - TV
+        - HDMI
+      volume_level: 0.28
+      is_volume_muted: false
+      device_class: tv
+      friendly_name: Living Room TV
+      supported_features: 24509
+      state: "on"

@@ -1,0 +1,39 @@
+######################################################################
+# -------------------------------------------------------------------
+# Air Quality - Automation for managing air quality in the house
+# -------------------------------------------------------------------
+######################################################################
+- alias: Run HVAC fan when low air quality detected
+  id: fa810cdd-1527-4fbb-80fc-cbd2364c2ec5
+  description: Run HVAC fan when low air quality detected
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.air_quality_monitor_pm2_5
+    above: 35
+    id: air_pm25_too_high
+  conditions: []
+  actions:
+  - action: script.send_notification_to_alexa
+    metadata: {}
+    data:
+      devices:
+      - 02b00f49f170bb978cfba6ebb3f3cc71
+      message: Low air quality detected. Running the fan for the next half hour, then
+        checking again
+      type: announce
+  - action: nest.set_fan_timer
+    metadata: {}
+    target:
+      entity_id: climate.downstairs_thermostat
+    data:
+      duration:
+        hours: 0
+        minutes: 30
+        seconds: 0
+  - delay:
+      hours: 0
+      minutes: 30
+      seconds: 0
+      milliseconds: 0
+  mode: single
