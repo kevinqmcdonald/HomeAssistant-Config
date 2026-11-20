@@ -27,7 +27,7 @@ template:
         icon: mdi:music
         device_class: "sound"
         state: >
-          {{ is_state("media_player.primary_bedroom_echo_show_2", "playing") and 
+          {{ is_state("media_player.primary_bedroom_echo_show_2", "playing") and
           state_attr("media_player.primary_bedroom_echo_show_2", "media_title") is not none }}
   - binary_sensor:
       - name: "Office speaker playing music"
@@ -43,7 +43,7 @@ template:
         icon: mdi:music
         device_class: "sound"
         state: >
-          {{ is_state("media_player.kitchen_echo_dot", "playing") and 
+          {{ is_state("media_player.kitchen_echo_dot", "playing") and
           state_attr("media_player.kitchen_echo_dot", "media_title") is not none }}
 
   - binary_sensor:

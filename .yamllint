@@ -1,0 +1,32 @@
+# yamllint config for Home Assistant YAML.
+# Run from the repo root:  yamllint .
+extends: default
+
+ignore: |
+  .storage/
+  .cloud/
+  custom_components/
+  www/
+  deps/
+  tts/
+  blueprints/**/homeassistant/
+  secrets.yaml
+
+rules:
+  # HA files start with a comment banner, not "---".
+  document-start: disable
+  # Long templates and descriptions are common; flag only the extreme ones.
+  line-length:
+    max: 160
+    level: warning
+  # HA's UI editor writes non-indented sequences; accept both styles.
+  indentation:
+    spaces: 2
+    indent-sequences: whatever
+  # HA uses on/off as quoted state strings; keep keys like "on:" legal.
+  truthy:
+    allowed-values: ["true", "false"]
+    check-keys: false
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: disable

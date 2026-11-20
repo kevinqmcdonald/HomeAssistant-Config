@@ -1,40 +1,43 @@
-Live view of the `config/` directory my Home Assistant instance loads every night. Use this README as a map when you want to jump directly into the most interesting packages, automations, and supporting assets.
+# Home Assistant Config
 
-### Quick navigation
-- You are here: `config/` (configuration root)
-- Directory highlights: [packages](packages), [automation](automation), [script](script), [scene](scene), [templates](templates), [dashboards](dashboards), [www](www), [custom_components](custom_components)
+My Home Assistant configuration, written in YAML and organized by type, with self-contained packages for larger subsystems.
 
-### What this folder is (and isn't)
-- Every YAML file here is live and version-controlled; anything missing is intentionally ignored via `.gitignore` (databases, logs, caches, etc.).
-- This is a split-configuration layout: `configuration.yaml` simply includes the files and directories documented here so changes are easy to isolate.
+## Setup
 
-### How the config is organized
-- **Packages (`packages/`)** – complete subsystems that bundle sensors, switches, automations, scripts, and lovelace assets for a single feature (alarm, garage, water shutoff, etc.).
-- **Automations (`automation/`)** – event-driven YAML broken out by area or device; the legacy `automations.yaml` remains for UI-created flows.
-- **Scripts & scenes (`script/`, `scene/`)** – curated lighting, notification, and AGENT engineer handoff helpers used by presence, holiday, seasonal, and infrastructure routines.
-- **Templates (`templates/`)** – Jinja helpers and speech templates reused by the notify/speech engines.
-- **Dashboards (`dashboards/`)** – YAML-managed Lovelace dashboards and UI resources (generated from storage, then maintained as code).
-- **www/ + custom components** – branding assets, floorplans, and any custom components the core install depends on.
-- **Custom Sidebar** – `www/custom-sidebar-config.yaml` controls the bottom Developer Tools shortcut; HACS owns the plugin files under `www/community/custom-sidebar`.
+- **Host:** Raspberry Pi 4 running Home Assistant OS
+- **Zigbee:** ZHA with a Home Assistant Connect ZBT coordinator
+- **Frontend:** [HACS](https://hacs.xyz/) with [card-mod](https://github.com/thomasloven/lovelace-card-mod) for themes
+- **Deployment:** the HA `/config` directory is a clone of this repo. Changes are pushed here, then pulled on the host.
 
-### Featured automations by section
-| Section            | Why start here                                                                         | Featured automation(s) |
-| ------------------ | -------------------------------------------------------------------------------------- | ---------------------- |
-| Packages           | Self-contained subsystems that highlight patterns like combined alerts + actions.      |                        |
-| Automations        | Real-world triggers that tie Zwave, MQTT, and REST sensors into the rest of the house. |                        |
-| Scripts            | Reusable building blocks for lighting, notifications, safety responses, etc.           |                        |
-| Scenes             | Seasonal and ambiance presets that the scripts and automations call into.              |                        |
-| Templates & Speech | Human-friendly voice briefings and templated responses.                                |                        |
-| Dashboards & Media | UI chrome, floorplans, sound bites, and automation assets.                             |                        |
+## Layout
 
-### Gear tied to these automations
-Only including devices that have active references in the files above.
+| Path | What's in it | Loaded by |
+| --- | --- | --- |
+| [configuration.yaml](configuration.yaml) | Core config that wires everything together | — |
+| [automation/](automation/) | YAML automations, one file per topic | `!include_dir_merge_list` |
+| [script/](script/) | Reusable scripts called by automations | `!include_dir_merge_named` |
+| [scene/](scene/) | Lighting and ambiance presets | `!include_dir_merge_list` |
+| [sensor/](sensor/) | Standalone utility sensors | `!include_dir_merge_list` |
+| [packages/](packages/) | Self-contained subsystems (security, media, a room's lighting) | `!include_dir_named` |
+| [blueprints/](blueprints/) | Imported automation and script blueprints | HA blueprint loader |
+| [themes/](themes/) | card-mod themes | `!include_dir_merge_named` |
+| [logger.yaml](logger.yaml), [recorder.yaml](recorder.yaml) | Log levels and history retention | `!include` |
 
-| Device | What it drives (friendly name -> file) | Buy |
-| ------ | -------------------------------------- | --- |
-|        |                                        |     |
+### UI and YAML side by side
 
-### Tips for re-use
-- Copy a package folder and adjust entity IDs in one place instead of hunting through automations.
-- Use the scripts and scenes as examples of how to break complicated flows into composable blocks.
-- The `www/` assets are ideal references when building your own Lovelace floorplans or dashboards.
+Automations, scripts and scenes are each loaded twice under different keys:
+
+```yaml
+automation ui: !include automations.yaml          # written by the HA UI editor
+automation yaml: !include_dir_merge_list automation  # hand-written, version-controlled
+```
+
+`automations.yaml`, `scripts.yaml` and `scenes.yaml` stay empty in the repo, so the UI editor keeps working without mixing its output into the hand-written files.
+
+## Secrets and ignored files
+
+[.gitignore](.gitignore) ignores **everything** by default and lets through only listed folders and the `*.yaml` / `*.md` file types. `secrets.yaml`, `custom_components/`, HACS downloads, the database and `.storage/` are never committed. Values that shouldn't be public use `!secret`.
+
+## Using this as a reference
+
+Feel free to borrow. Entity IDs are specific to my devices, so expect to rename them. The packages, especially [primary_bathroom_lighting.yaml](packages/primary_bathroom_lighting.yaml), record their hardware dependencies and design choices in a header comment, which is a good place to start.
