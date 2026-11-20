@@ -26,7 +26,7 @@
     light.living_room_reading_light:
       friendly_name: Reading Light
       state: "on"
-    light.tv_lights:
+    light.living_room_tv_lights:
       min_color_temp_kelvin: 2000
       max_color_temp_kelvin: 9000
       effect_list:
