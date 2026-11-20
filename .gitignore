@@ -2,6 +2,8 @@
 *
 
 # Explicit folder whitelist
+!.claude/
+!.claude/**
 !packages/
 !automation/
 !themes/
@@ -29,3 +31,4 @@ ip_bans.yaml
 secrets.yaml
 known_devices.yaml
 *.local.md
+*.local.json

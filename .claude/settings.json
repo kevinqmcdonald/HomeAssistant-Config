@@ -1,0 +1,43 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard_files.py\"",
+            "statusMessage": "Checking protected files"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard_push.py\"",
+            "statusMessage": "Checking for deploys",
+            "onFailure": "block"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "statusMessage": "Linting YAML",
+            "command": "python -c \"import sys,json,subprocess;p=json.load(sys.stdin).get('tool_input',{}).get('file_path','');sys.exit(0) if not p.endswith('.yaml') or 'blueprints' in p else None;r=subprocess.run(['yamllint','-f','parsable',p],capture_output=True,text=True);print(r.stdout,file=sys.stderr);sys.exit(2 if r.returncode else 0)\""
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "homeassistant-config@claude-homeassistant-plugins": true,
+    "home-assistant-skills@home-assistant-skills": true
+  }
+}
