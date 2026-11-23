@@ -87,6 +87,9 @@ Walnut:
   state-person-not_home-color: var(--wn-text-secondary)
   state-device_tracker-home-color: var(--wn-ok)
   state-device_tracker-not_home-color: var(--wn-text-secondary)
+  # Any other zone (e.g. "Work", "Driving")
+  state-person-zone-color: var(--wn-accent-tan)
+  state-device_tracker-zone-color: var(--wn-accent-tan)
 
   # Chrome
   app-header-background-color: "rgba(12, 8, 5, 0.6)"

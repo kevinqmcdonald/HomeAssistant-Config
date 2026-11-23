@@ -83,13 +83,25 @@ wn_status:
       - justify-self: start
       - font-size: var(--wn-font-sm)
       - color: var(--wn-text-secondary)
+    # State shrinks from --wn-font-xl (28px) towards --wn-font-lg (20px) as the card
+    # narrows (container units), so a half-width card on the phone fits "Driving".
+    card:
+      - container-type: inline-size
     state:
       - justify-self: start
-      - font-size: var(--wn-font-xl)
+      - font-size: clamp(var(--wn-font-lg), 12cqi, var(--wn-font-xl))
       - font-weight: 600
       - color: var(--wn-text)
+      - white-space: normal
+      - text-align: left
     # Icon follows the theme's state colour (e.g. disarmed / home = --wn-ok green),
     # so it matches tiles and badges for the same entity. Gold if the theme has none.
+    # A person/device_tracker in any other zone uses HA's "zone" state colour.
     icon:
       - color: >-
-          [[[ return `var(--state-${entity.entity_id.split('.')[0]}-${entity.state}-color, var(--wn-accent-gold))`; ]]]
+          [[[
+            const d = entity.entity_id.split('.')[0];
+            let s = entity.state;
+            if (['person', 'device_tracker'].includes(d) && !['home', 'not_home'].includes(s)) s = 'zone';
+            return `var(--state-${d}-${s}-color, var(--wn-accent-gold))`;
+          ]]]
