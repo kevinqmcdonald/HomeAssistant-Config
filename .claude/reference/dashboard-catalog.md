@@ -22,7 +22,8 @@ Suggesting a new HACS install is allowed, but call it out explicitly as a new de
 
 | Theme | Source | Notes |
 | --- | --- | --- |
-| Warm Home | repo | Only theme actually in use. Lora serif font, 18px radius, terracotta primary. Sets `card-mod-card` globally. |
+| **Walnut** | repo (`themes/walnut.yaml`) | **The house theme** (since 2026-11-23): dark-only, walnut photo, frosted tiles, Inter, blue/gold/tan. All tokens (`--wn-*`) are listed in the style guide. Currently applied only to the style sample on `dashboard-scratch`; the real dashboards switch over during the redesign. |
+| Warm Home | repo | Being replaced by Walnut. Still applied to `dashboard-home` and hardcoded into `dashboard-security`'s `card_mod` until the redesign. |
 | Luxury Gold, Material You, Soft Pastel | repo | Unused. |
 | nordic, nordic-blue | HACS (coltondick/nordic-theme-main) | Unused. |
 
