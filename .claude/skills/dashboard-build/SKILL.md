@@ -66,7 +66,11 @@ List them in the hand-over.
 
 **6. Hand-over to Kevin.** Capture the main view yourself at the three sizes
 (`ha_get_dashboard_screenshot`, url_path `dashboard-scratch`, widths 1715/384/2372, heights
-965/798/1294, plus `theme` if deployed) so he can see it. Then write the hand-over with:
+965/798/1294, plus `theme` if deployed) so he can see it. Passing `theme` can persist on
+the screenshot engine's user. Read `ha_manage_theme(action="get_engine_theme")` before the
+captures. If it changed afterwards, restore it with `set_engine_theme`, passing the
+**inner** `{"dark": …, "theme": …}` object as `value` and the current one as
+`expected_current`. Restore it even if a capture fails. Then write the hand-over with:
 - the lint and review results (the final `RESULT:` lines, and any remaining findings or
   warnings)
 - the files created or changed

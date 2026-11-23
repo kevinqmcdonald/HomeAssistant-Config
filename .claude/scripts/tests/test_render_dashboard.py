@@ -34,6 +34,23 @@ class RenderDashboardTest(unittest.TestCase):
         cfg = rd.load_dashboard(fx("dir_merge.yaml"))
         self.assertEqual(cfg["listed"], [{"alpha": {"value": 1}}, {"beta": {"value": 2}}])
 
+    def test_dir_includes_recurse_like_ha(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            views = os.path.join(tmp, "views", "home")
+            os.makedirs(views)
+            os.makedirs(os.path.join(tmp, "views", ".hidden"))
+            with open(os.path.join(views, "main.yaml"), "w", encoding="utf-8") as fh:
+                fh.write("- title: Main\n  path: main\n")
+            with open(os.path.join(tmp, "views", ".hidden", "x.yaml"), "w", encoding="utf-8") as fh:
+                fh.write("- title: Hidden\n")
+            with open(os.path.join(views, "notes.yml"), "w", encoding="utf-8") as fh:
+                fh.write("- title: Yml\n")
+            root = os.path.join(tmp, "dash.yaml")
+            with open(root, "w", encoding="utf-8") as fh:
+                fh.write("views: !include_dir_merge_list views\n")
+            cfg = rd.load_dashboard(root)
+        self.assertEqual([v["title"] for v in cfg["views"]], ["Main"])
+
     def test_secret_raises(self):
         with self.assertRaises(rd.DashboardLoadError) as ctx:
             rd.load_dashboard(fx("secret.yaml"))

@@ -34,7 +34,7 @@ Home Assistant configuration, written in YAML. This repo **is** the live `/confi
 
 ## .gitignore is a whitelist
 
-[.gitignore](.gitignore) starts with `*` and lets through only listed folders plus `*.yaml`, `*.md`, `.gitignore` and `.gitkeep`. Two consequences:
+[.gitignore](.gitignore) starts with `*` and lets through only listed folders plus `*.yaml`, `*.md`, `.gitignore` and `.gitkeep`. In `www/`, only `www/backgrounds/` and `www/fonts/` are tracked (any file type). The rest of `www/` stays local. `__pycache__/` and `*.pyc` are ignored. Two consequences:
 - A **new top-level folder** or a **new file type** (e.g. `.yamllint`, `.py`, `.jinja`) is silently ignored until it's added to the whitelist. Check `git status` after creating one.
 - `secrets.yaml`, `custom_components/`, `www/community/`, `ip_bans.yaml`, `known_devices.yaml` and `*.local.md` are deliberately excluded. Don't un-ignore them.
 

@@ -46,6 +46,8 @@ Walnut:
   wn-font-xl: "28px"
 
   # --- Background ---------------------------------------------------
+  # Kept literal: lovelace-background is parsed as a CSS background shorthand.
+  # Values mirror wn-dim (0.45) and wn-bg-image; change them together.
   lovelace-background: >-
     linear-gradient(rgba(10, 6, 3, 0.45), rgba(10, 6, 3, 0.45)) fixed,
     url("/local/backgrounds/walnut.jpg") center / cover no-repeat fixed
@@ -54,6 +56,42 @@ Walnut:
   primary-font-family: var(--wn-font)
   ha-font-family-body: var(--wn-font)
   ha-font-family-heading: var(--wn-font)
+
+  # --- Base palette --------------------------------------------------
+  # Top level on purpose, so it applies whatever the device's light/dark
+  # setting is (a dark-only block would leave dark text on dark glass in
+  # light mode). primary-color / accent-color stay literal hex because HA
+  # derives rgb-primary-color etc. from them in JavaScript.
+  primary-color: "#7fb3e6"
+  accent-color: "#e6c15a"
+  primary-background-color: "#16100b"
+  secondary-background-color: "#211810"
+  primary-text-color: var(--wn-text)
+  secondary-text-color: var(--wn-text-secondary)
+  disabled-text-color: var(--wn-text-disabled)
+  text-primary-color: "#0e0a07"
+  divider-color: var(--wn-border)
+
+  # State colours: gold means "on"
+  state-icon-color: var(--wn-text-secondary)
+  state-light-active-color: var(--wn-accent-gold)
+  state-switch-active-color: var(--wn-accent-gold)
+  state-fan-active-color: var(--wn-accent-gold)
+  state-media_player-active-color: var(--wn-accent-blue)
+  state-alarm_control_panel-disarmed-color: var(--wn-ok)
+  state-alarm_control_panel-armed_home-color: var(--wn-accent-blue)
+  state-alarm_control_panel-armed_away-color: var(--wn-accent-blue)
+  state-alarm_control_panel-triggered-color: var(--wn-alert)
+
+  # Chrome
+  app-header-background-color: "rgba(12, 8, 5, 0.6)"
+  app-header-text-color: var(--wn-text)
+  sidebar-background-color: "rgba(12, 8, 5, 0.88)"
+  sidebar-text-color: var(--wn-text)
+  sidebar-icon-color: var(--wn-text-secondary)
+  sidebar-selected-icon-color: var(--wn-accent-gold)
+  sidebar-selected-text-color: var(--wn-accent-gold)
+  ha-dialog-surface-background: var(--secondary-background-color)
 
   # --- Cards --------------------------------------------------------
   ha-card-background: var(--wn-surface)
@@ -74,39 +112,11 @@ Walnut:
   bubble-pop-up-background-color: var(--wn-surface-strong)
   bubble-border-radius: var(--wn-radius)
 
+  # Declaring a dark mode lets HA use its dark defaults for anything this
+  # theme doesn't set (inputs, editors) on devices in dark mode.
   modes:
     dark:
-      # Base palette (dark-only theme: there is deliberately no light mode)
-      primary-color: "#7fb3e6"
-      accent-color: "#e6c15a"
-      primary-background-color: "#16100b"
-      secondary-background-color: "#211810"
-      primary-text-color: "#ffffff"
-      secondary-text-color: "rgba(225, 235, 245, 0.70)"
-      disabled-text-color: "rgba(225, 235, 245, 0.38)"
-      text-primary-color: "#0e0a07"
-      divider-color: "rgba(200, 220, 240, 0.14)"
-
-      # State colours: gold means "on"
-      state-icon-color: "rgba(225, 235, 245, 0.70)"
-      state-light-active-color: "#e6c15a"
-      state-switch-active-color: "#e6c15a"
-      state-fan-active-color: "#e6c15a"
-      state-media_player-active-color: "#7fb3e6"
-      state-alarm_control_panel-disarmed-color: "#8cc79a"
-      state-alarm_control_panel-armed_home-color: "#7fb3e6"
-      state-alarm_control_panel-armed_away-color: "#7fb3e6"
-      state-alarm_control_panel-triggered-color: "#ec7766"
-
-      # Chrome
-      app-header-background-color: "rgba(12, 8, 5, 0.6)"
-      app-header-text-color: "#ffffff"
-      sidebar-background-color: "rgba(12, 8, 5, 0.88)"
-      sidebar-text-color: "rgba(225, 235, 245, 0.85)"
-      sidebar-icon-color: "rgba(225, 235, 245, 0.70)"
-      sidebar-selected-icon-color: "#e6c15a"
-      sidebar-selected-text-color: "#e6c15a"
-      ha-dialog-surface-background: "#211810"
+      wn-mode: dark
 
   # --- Global card-mod rules ----------------------------------------
   card-mod-card: |

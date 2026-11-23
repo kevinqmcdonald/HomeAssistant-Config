@@ -5,6 +5,7 @@ and by lint_dashboard.py to read the full config a dashboard file expands to.
 
 Supported tags, resolved relative to the file that contains them (as HA does):
   !include FILE
+  (directory tags walk subfolders, skip hidden names and read only *.yaml, like HA)
   !include_dir_list DIR          -> list of each file's content (sorted by name)
   !include_dir_named DIR         -> {filename_stem: content}
   !include_dir_merge_list DIR    -> concatenation of each file's list
@@ -29,13 +30,14 @@ class DashboardLoadError(Exception):
 
 
 def _yaml_files(directory):
+    """*.yaml files under directory, recursively, sorted, skipping hidden names (as HA does)."""
     if not os.path.isdir(directory):
         raise DashboardLoadError(f"include directory not found: {directory}")
-    return [
-        os.path.join(directory, name)
-        for name in sorted(os.listdir(directory))
-        if name.endswith((".yaml", ".yml")) and os.path.isfile(os.path.join(directory, name))
-    ]
+    found = []
+    for root, dirs, files in os.walk(directory):
+        dirs[:] = [d for d in dirs if not d.startswith(".")]
+        found.extend(os.path.join(root, f) for f in files if f.endswith(".yaml") and not f.startswith("."))
+    return sorted(found)
 
 
 class _Resolver:

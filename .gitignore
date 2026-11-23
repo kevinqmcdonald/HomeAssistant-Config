@@ -27,9 +27,6 @@
 !.gitattributes
 !.gitkeep
 !*.md
-!*.jpg
-!*.webp
-!*.woff2
 
 # Only www/backgrounds/ and www/fonts/ are tracked; the rest of www/ stays local
 www/*
@@ -39,6 +36,8 @@ www/*
 # Specific folder ignores
 custom_components/
 www/community/
+__pycache__/
+*.pyc
 blueprints/**/homeassistant/
 
 # Specific file ignores
