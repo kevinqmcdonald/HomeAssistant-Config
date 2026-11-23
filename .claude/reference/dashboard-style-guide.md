@@ -25,25 +25,27 @@ colour literals outside `themes/`.
 
 | Token | Purpose | Value |
 | --- | --- | --- |
-| `--wn-bg-image` | View background (dark-wood photo) | TBD (Task 9) |
-| `--wn-surface` | Frosted tile fill (translucent) | TBD (Task 9) |
-| `--wn-surface-strong` | Emphasised tile / pop-up fill | TBD (Task 9) |
-| `--wn-border` | Hairline tile border | TBD (Task 9) |
-| `--wn-blur` | Backdrop blur radius | TBD (Task 9) |
-| `--wn-text` | Primary text (white) | TBD (Task 9) |
-| `--wn-text-secondary` | Secondary text | TBD (Task 9) |
-| `--wn-text-disabled` | Disabled / unavailable | TBD (Task 9) |
-| `--wn-accent-blue` | Accent: cool / water / info | TBD (Task 9) |
-| `--wn-accent-gold` | Accent: primary / active / "on" | TBD (Task 9) |
-| `--wn-accent-tan` | Accent: neutral / secondary actions | TBD (Task 9) |
-| `--wn-ok` | Status: good | TBD (Task 9) |
-| `--wn-warn` | Status: attention | TBD (Task 9) |
-| `--wn-alert` | Status: problem | TBD (Task 9) |
-| `--wn-radius` | Tile corner radius | TBD (Task 9) |
-| `--wn-gap` | Inner padding / gap unit | TBD (Task 9) |
+| `--wn-bg-image` | View background (dark-wood photo) | `url("/local/backgrounds/walnut.jpg")` under a 0.45 dark gradient |
+| `--wn-surface` | Frosted tile fill (translucent) | `rgba(14, 10, 7, 0.62)` |
+| `--wn-surface-strong` | Emphasised tile / pop-up fill | `rgba(14, 10, 7, 0.82)` |
+| `--wn-border` | Hairline tile border | `rgba(200, 220, 240, 0.14)` |
+| `--wn-blur` | Backdrop blur radius | `20px` |
+| `--wn-text` | Primary text (white) | `#ffffff` |
+| `--wn-text-secondary` | Secondary text | `rgba(225, 235, 245, 0.70)` |
+| `--wn-text-disabled` | Disabled / unavailable | `rgba(225, 235, 245, 0.38)` |
+| `--wn-accent-blue` | Accent: cool / water / info | `#7fb3e6` (primary) |
+| `--wn-accent-gold` | Accent: primary / active / "on" | `#e6c15a` |
+| `--wn-accent-tan` | Accent: neutral / secondary actions | `#c9a27a` |
+| `--wn-ok` | Status: good | `#8cc79a` |
+| `--wn-warn` | Status: attention | `#f2b04c` |
+| `--wn-alert` | Status: problem | `#ec7766` |
+| `--wn-rgb-ok` / `--wn-rgb-warn` / `--wn-rgb-alert` | RGB triplets for tints: `rgba(var(--wn-rgb-warn), 0.2)` | `140, 199, 154` / `242, 176, 76` / `236, 119, 102` |
+| `--wn-radius` | Tile corner radius | `16px` |
+| `--wn-gap` | Inner padding / gap unit | `14px` |
 | `--wn-touch-min` | Minimum touch target | `48px` |
-| `--wn-font` | Font family (sans-serif) | TBD (Task 9) |
-| `--wn-font-xs` … `--wn-font-xl` | Type scale (5 steps) | TBD (Task 9) |
+| `--wn-icon-size` | House-template icon size | `28px` |
+| `--wn-font` | Font family (sans-serif) | `Inter` (self-hosted), then system sans-serif |
+| `--wn-font-xs` … `--wn-font-xl` | Type scale (5 steps) | `12 / 14 / 16 / 20 / 28px` |
 
 When a card needs an RGB triplet (e.g. Mushroom `--rgb-*`), the theme defines it next
 to the token, and cards use `rgba(var(--rgb-…), alpha)`. Lint allows that pattern.
@@ -107,3 +109,4 @@ House templates live in `dashboards/components/button_card_templates.yaml`. Each
 | Template | Purpose | Parameters (`variables:`) |
 | --- | --- | --- |
 | `wn_base` | Base for all house buttons: section-grid sizing, 48px minimum, token typography. Glass surface comes from the theme. | none |
+| `wn_alert` | Full-width status banner for a binary entity: warn styling when `on`, ok styling when `off`. Set `entity`, `name`, `label`. | none |

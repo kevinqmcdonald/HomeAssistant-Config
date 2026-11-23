@@ -1,0 +1,107 @@
+######################################################################
+# -------------------------------------------------------------------
+# Style sample dashboard
+#  Reference view for the Walnut theme: shows the tokens and every house
+#  template on real entities. dashboard-reviewer checks new work against it.
+#  Not registered as a dashboard; render it to dashboard-scratch with
+#  /dashboard-build. Design: .claude/designs/2026-11-23-walnut-theme.md
+# -------------------------------------------------------------------
+######################################################################
+
+button_card_templates: !include components/button_card_templates.yaml
+views:
+  - title: Style sample
+    path: style-sample
+    type: sections
+    max_columns: 4
+    badges:
+      - type: entity
+        entity: alarm_control_panel.home_alarm
+        show_name: true
+        show_state: true
+      - type: entity
+        entity: binary_sensor.door_entry_sensors
+        show_name: true
+        show_state: true
+      - type: entity
+        entity: binary_sensor.window_entry_sensors
+        show_name: true
+        show_state: true
+      - type: entity
+        entity: person.kevin_mcdonald
+        show_name: true
+        show_state: true
+      - type: entity
+        entity: person.jordan_cassino
+        show_name: true
+        show_state: true
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Home
+          - type: custom:button-card
+            template: wn_alert
+            entity: binary_sensor.is_any_entry_sensor_open
+            name: Doors & windows
+            label: "[[[ return entity.state === 'on' ? 'Something is open' : 'All closed'; ]]]"
+            grid_options:
+              columns: full
+          - type: tile
+            entity: alarm_control_panel.home_alarm
+            features:
+              - type: alarm-modes
+                modes: [armed_home, armed_away, disarmed]
+            grid_options:
+              columns: full
+      - type: grid
+        cards:
+          - type: heading
+            heading: Rooms
+          - type: tile
+            entity: light.kitchen_light
+            name: Kitchen
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: light.living_room_light
+            name: Living Room
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: light.bedroom_light_1
+            name: Primary Bedroom
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: light.office_light
+            name: Office
+            grid_options:
+              columns: 6
+      - type: grid
+        cards:
+          - type: heading
+            heading: Now playing
+          - type: tile
+            entity: media_player.kitchen_echo_dot
+            name: Kitchen
+            show_entity_picture: true
+            state_content: [media_artist, media_title]
+            features:
+              - type: media-player-playback
+              - type: media-player-volume-slider
+            grid_options:
+              columns: full
+      - type: grid
+        cards:
+          - type: heading
+            heading: Weather
+          - type: tile
+            entity: weather.local_weather_tracker
+            features:
+              - type: temperature-forecast
+                forecast_type: daily
+                days_to_show: 5
+            grid_options:
+              columns: full
+              rows: 3

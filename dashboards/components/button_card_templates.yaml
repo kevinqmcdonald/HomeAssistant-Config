@@ -30,3 +30,33 @@ wn_base:
       - color: var(--wn-text-secondary)
     icon:
       - color: var(--wn-accent-gold)
+      - width: var(--wn-icon-size)
+
+# Full-width status banner for a binary entity: warn styling when "on", ok when "off".
+# Set entity, name and label on the card.
+wn_alert:
+  template: wn_base
+  show_label: true
+  layout: icon_name_label
+  styles:
+    grid:
+      - grid-template-areas: '"i n" "i l"'
+      - grid-template-columns: var(--wn-touch-min) 1fr
+      - justify-items: start
+      - column-gap: var(--wn-gap)
+    name:
+      - font-size: var(--wn-font-lg)
+      - font-weight: 600
+    icon:
+      - color: var(--wn-ok)
+  state:
+    - value: "on"
+      icon: mdi:alert
+      styles:
+        card:
+          - border-color: var(--wn-warn)
+          - background: rgba(var(--wn-rgb-warn), 0.20)
+        icon:
+          - color: var(--wn-warn)
+    - value: "off"
+      icon: mdi:shield-check

@@ -1,0 +1,116 @@
+######################################################################
+# -------------------------------------------------------------------
+# Walnut theme
+#  Dark-only house theme: walnut photo background, frosted glass tiles,
+#  white Inter text, blue-led accents with gold for "on".
+#  Tokens (--wn-*) are the single source of style for every dashboard.
+#  See .claude/reference/dashboard-style-guide.md and
+#  .claude/designs/2026-11-23-walnut-theme.md (variant B "Smoked blue").
+#  Needs: www/backgrounds/walnut.jpg, and the Lovelace css resource
+#  /local/fonts/inter.css for the font (falls back to system sans-serif).
+# -------------------------------------------------------------------
+######################################################################
+
+Walnut:
+  card-mod-theme: Walnut
+
+  # --- Tokens -------------------------------------------------------
+  wn-dim: "0.45"
+  wn-bg-image: 'url("/local/backgrounds/walnut.jpg")'
+  wn-surface: "rgba(14, 10, 7, 0.62)"
+  wn-surface-strong: "rgba(14, 10, 7, 0.82)"
+  wn-border: "rgba(200, 220, 240, 0.14)"
+  wn-blur: "20px"
+  wn-text: "#ffffff"
+  wn-text-secondary: "rgba(225, 235, 245, 0.70)"
+  wn-text-disabled: "rgba(225, 235, 245, 0.38)"
+  wn-accent-blue: "#7fb3e6"
+  wn-accent-gold: "#e6c15a"
+  wn-accent-tan: "#c9a27a"
+  wn-ok: "#8cc79a"
+  wn-warn: "#f2b04c"
+  wn-alert: "#ec7766"
+  # RGB triplets for translucent tints: rgba(var(--wn-rgb-*), alpha)
+  wn-rgb-ok: "140, 199, 154"
+  wn-rgb-warn: "242, 176, 76"
+  wn-rgb-alert: "236, 119, 102"
+  wn-radius: "16px"
+  wn-gap: "14px"
+  wn-touch-min: "48px"
+  wn-icon-size: "28px"
+  wn-font: '"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
+  wn-font-xs: "12px"
+  wn-font-sm: "14px"
+  wn-font-md: "16px"
+  wn-font-lg: "20px"
+  wn-font-xl: "28px"
+
+  # --- Background ---------------------------------------------------
+  lovelace-background: >-
+    linear-gradient(rgba(10, 6, 3, 0.45), rgba(10, 6, 3, 0.45)) fixed,
+    url("/local/backgrounds/walnut.jpg") center / cover no-repeat fixed
+
+  # --- Typography ---------------------------------------------------
+  primary-font-family: var(--wn-font)
+  ha-font-family-body: var(--wn-font)
+  ha-font-family-heading: var(--wn-font)
+
+  # --- Cards --------------------------------------------------------
+  ha-card-background: var(--wn-surface)
+  card-background-color: var(--wn-surface)
+  ha-card-border-color: var(--wn-border)
+  ha-card-border-width: "1px"
+  ha-card-border-radius: var(--wn-radius)
+  ha-card-box-shadow: "0 6px 20px rgba(0, 0, 0, 0.25)"
+  feature-height: var(--wn-touch-min)
+  feature-border-radius: "10px"
+
+  # --- Mushroom / Bubble follow the same tokens ----------------------
+  mush-card-primary-font-size: var(--wn-font-md)
+  mush-card-secondary-font-size: var(--wn-font-sm)
+  mush-icon-size: "44px"
+  mush-control-height: var(--wn-touch-min)
+  bubble-main-background-color: var(--wn-surface)
+  bubble-pop-up-background-color: var(--wn-surface-strong)
+  bubble-border-radius: var(--wn-radius)
+
+  modes:
+    dark:
+      # Base palette (dark-only theme: there is deliberately no light mode)
+      primary-color: "#7fb3e6"
+      accent-color: "#e6c15a"
+      primary-background-color: "#16100b"
+      secondary-background-color: "#211810"
+      primary-text-color: "#ffffff"
+      secondary-text-color: "rgba(225, 235, 245, 0.70)"
+      disabled-text-color: "rgba(225, 235, 245, 0.38)"
+      text-primary-color: "#0e0a07"
+      divider-color: "rgba(200, 220, 240, 0.14)"
+
+      # State colours: gold means "on"
+      state-icon-color: "rgba(225, 235, 245, 0.70)"
+      state-light-active-color: "#e6c15a"
+      state-switch-active-color: "#e6c15a"
+      state-fan-active-color: "#e6c15a"
+      state-media_player-active-color: "#7fb3e6"
+      state-alarm_control_panel-disarmed-color: "#8cc79a"
+      state-alarm_control_panel-armed_home-color: "#7fb3e6"
+      state-alarm_control_panel-armed_away-color: "#7fb3e6"
+      state-alarm_control_panel-triggered-color: "#ec7766"
+
+      # Chrome
+      app-header-background-color: "rgba(12, 8, 5, 0.6)"
+      app-header-text-color: "#ffffff"
+      sidebar-background-color: "rgba(12, 8, 5, 0.88)"
+      sidebar-text-color: "rgba(225, 235, 245, 0.85)"
+      sidebar-icon-color: "rgba(225, 235, 245, 0.70)"
+      sidebar-selected-icon-color: "#e6c15a"
+      sidebar-selected-text-color: "#e6c15a"
+      ha-dialog-surface-background: "#211810"
+
+  # --- Global card-mod rules ----------------------------------------
+  card-mod-card: |
+    ha-card {
+      backdrop-filter: blur(var(--wn-blur));
+      -webkit-backdrop-filter: blur(var(--wn-blur));
+    }
