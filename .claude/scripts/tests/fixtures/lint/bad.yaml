@@ -1,0 +1,25 @@
+# Fixture: lint violations (line numbers are asserted in tests)
+views:
+  - title: One
+    path: one
+    type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: custom:not-installed-card
+          - type: tile
+            entity: light.kitchen
+            color: "#c47a3a"
+            card_mod:
+              style: |
+                ha-card { background: rgba(180,130,80,0.15) !important; }
+          - type: custom:atomic-calendar-revive
+            entities: [calendar.home]
+            card_mod:
+              style: ".event-title { font-weight: bold; }"
+          - type: custom:mushroom-template-card
+            primary: "{% set x = states('sensor.a') | int(0) %}{% if x > 10 %}High value here{% else %}Low value here{% endif %}"
+          - type: custom:mushroom-template-card
+            primary: "{% set x = states('sensor.a') | int(0) %}{% if x > 10 %}High value here{% else %}Low value here{% endif %}"
+  - title: Two
+    cards: []

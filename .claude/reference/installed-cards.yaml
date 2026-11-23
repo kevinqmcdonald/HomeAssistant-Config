@@ -1,0 +1,61 @@
+######################################################################
+# -------------------------------------------------------------------
+# Dashboard card allowlist
+#  Machine-readable list of card types lint_dashboard.py accepts.
+#  Keep in sync with dashboard-catalog.md (a unit test checks it).
+#  tier: A theme-native, B own theme vars, C own config styling, D card_mod only.
+#  card_mod: allowed (tier D) or discouraged (style via the theme instead).
+# -------------------------------------------------------------------
+######################################################################
+
+cards:
+  # --- Built-in cards (only custom: types are enforced; these document card_mod policy)
+  - {type: tile, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: heading, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: entities, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: glance, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: markdown, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: picture-entity, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: picture, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: weather-forecast, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: map, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: alarm-panel, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: grid, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: horizontal-stack, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: vertical-stack, source: core, repo: null, tier: A, card_mod: discouraged}
+  - {type: conditional, source: core, repo: null, tier: A, card_mod: discouraged}
+
+  # --- Layout and structure
+  - {type: "custom:*-layout", source: hacs, repo: thomasloven/lovelace-layout-card, tier: A, card_mod: discouraged}
+  - {type: "custom:layout-card", source: hacs, repo: thomasloven/lovelace-layout-card, tier: A, card_mod: discouraged}
+  - {type: "custom:vertical-stack-in-card", source: hacs, repo: ofekashery/vertical-stack-in-card, tier: A, card_mod: discouraged}
+  - {type: "custom:simple-swipe-card", source: hacs, repo: nutteloost/simple-swipe-card, tier: A, card_mod: discouraged}
+  - {type: "custom:auto-entities", source: hacs, repo: thomasloven/lovelace-auto-entities, tier: A, card_mod: discouraged}
+  - {type: "custom:popup-card", source: hacs, repo: thomasloven/hass-browser_mod, tier: A, card_mod: discouraged}
+  - {type: "custom:config-template-card", source: hacs, repo: iantrich/config-template-card, tier: C, card_mod: discouraged}
+
+  # --- Controls and entity cards
+  - {type: "custom:mushroom-*", source: hacs, repo: piitaya/lovelace-mushroom, tier: B, card_mod: discouraged}
+  - {type: "custom:button-card", source: hacs, repo: custom-cards/button-card, tier: C, card_mod: discouraged}
+  - {type: "custom:bubble-card", source: hacs, repo: Clooos/Bubble-Card, tier: B, card_mod: discouraged}
+  - {type: "custom:foundry-*", source: hacs, repo: dprischak/Foundry-Card, tier: C, card_mod: discouraged}
+  - {type: "custom:template-entity-row", source: hacs, repo: thomasloven/lovelace-template-entity-row, tier: A, card_mod: discouraged}
+  - {type: "custom:secondaryinfo-entity-row", source: hacs, repo: custom-cards/secondaryinfo-entity-row, tier: A, card_mod: discouraged}
+
+  # --- Data display
+  - {type: "custom:gauge-card-pro", source: hacs, repo: benjamin-dcs/gauge-card-pro, tier: C, card_mod: discouraged}
+  - {type: "custom:mini-graph-card", source: hacs, repo: kalkih/mini-graph-card, tier: B, card_mod: discouraged}
+  - {type: "custom:clock-weather-card", source: hacs, repo: pkissling/clock-weather-card, tier: C, card_mod: discouraged}
+  - {type: "custom:weather-radar-card", source: hacs, repo: jpettitt/weather-radar-card, tier: D, card_mod: allowed}
+  - {type: "custom:floorplan-card", source: hacs, repo: ExperienceLovelace/ha-floorplan, tier: C, card_mod: discouraged}
+
+  # --- Domain-specific
+  - {type: "custom:advanced-camera-card", source: hacs, repo: dermotduffy/advanced-camera-card, tier: D, card_mod: allowed}
+  - {type: "custom:atomic-calendar-revive", source: hacs, repo: totaldebug/atomic-calendar-revive, tier: D, card_mod: allowed}
+  - {type: "custom:daylight-calendar-card", source: hacs, repo: superdingo101/daylight-calendar-card, tier: C, card_mod: discouraged}
+  - {type: "custom:trash-card", source: hacs, repo: idaho/hassio-trash-card, tier: A, card_mod: discouraged}
+  - {type: "custom:simple-timer-card", source: hacs, repo: eyalgal/simple-timer-card, tier: C, card_mod: discouraged}
+  - {type: "custom:spotifyplus-card", source: hacs, repo: thlucas1/spotifyplus_card, tier: D, card_mod: allowed}
+  - {type: "custom:vacuum-card", source: hacs, repo: denysdovhan/vacuum-card, tier: D, card_mod: allowed}
+  - {type: "custom:mail-and-packages-card", source: hacs, repo: moralmunky/Home-Assistant-Mail-And-Packages-Custom-Card, tier: D, card_mod: allowed}
+  - {type: "custom:tracking-number-card", source: manual, repo: null, tier: D, card_mod: allowed}

@@ -1,0 +1,19 @@
+# Fixture: clean dashboard
+views:
+  - title: Home
+    path: home
+    type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Living room
+          - type: tile
+            entity: light.living_room
+            color: "rgba(var(--rgb-primary-color), 0.2)"
+          - type: custom:mushroom-entity-card
+            entity: light.kitchen
+            icon_color: red
+            tap_action:
+              action: navigate
+              navigation_path: "#bedroom"

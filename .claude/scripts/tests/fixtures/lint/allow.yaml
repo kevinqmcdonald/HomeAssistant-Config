@@ -1,0 +1,8 @@
+# Fixture: suppressed hardcoded colour
+views:
+  - title: Calendar
+    path: calendar
+    cards:
+      - type: custom:daylight-calendar-card
+        colors:
+          calendar.kevin: "#008c00"  # lint-ignore: hardcoded-color
