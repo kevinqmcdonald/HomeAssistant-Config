@@ -99,6 +99,7 @@ must approve it. After installing, add it to `installed-cards.yaml` and the cata
   so it reads from across the room.
 - White text on `--wn-surface` must reach WCAG AA (4.5:1) over the **lightest** area of the
   wood photo, not just the average.
+- View badges are glance-only: give them `tap_action: none`, because they're about 34px tall and too small to read from across a room. Key status (alarm, doors, who's home) goes in a `wn_status` or `wn_alert` card, never only in a badge.
 - Status meaning never relies on colour alone: pair `--wn-ok/warn/alert` with an icon or word.
 
 ## 7. Component index
@@ -110,3 +111,4 @@ House templates live in `dashboards/components/button_card_templates.yaml`. Each
 | --- | --- | --- |
 | `wn_base` | Base for all house buttons: section-grid sizing, 48px minimum, token typography. Glass surface comes from the theme. | none |
 | `wn_alert` | Full-width status banner for a binary entity: warn styling when `on`, ok styling when `off`. Set `entity`, `name`, `label`. | none |
+| `wn_status` | Key status readable across the room: small name above the state at `--wn-font-xl`. Set `entity` and `name`. Tap opens more-info. | none |

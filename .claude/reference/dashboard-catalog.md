@@ -93,6 +93,7 @@ only where no alternative exists, and expect it to look "off-theme".
 | Mail and Packages card | `custom:mail-and-packages-card` | 0.06 | D | No. Stale (2021). |
 | tracking-number-card | `custom:tracking-number-card` | manual install (not HACS) | D | Deliveries. |
 | sunset-predictor-card | `/local/sunset-predictor-card.js` | manual install (not HACS), origin unknown | ? | Not referenced by any dashboard. |
+| Inter font (not a card) | `/local/fonts/inter.css?v=1` (`css` resource) | repo `www/fonts/`, added 2026-11-23 | n/a | Loads the Walnut theme's `--wn-font`. Bump `?v=` when the file changes. |
 
 ## Target devices
 

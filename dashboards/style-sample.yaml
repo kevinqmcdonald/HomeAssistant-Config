@@ -19,22 +19,34 @@ views:
         entity: alarm_control_panel.home_alarm
         show_name: true
         show_state: true
+        tap_action:
+          action: none
       - type: entity
         entity: binary_sensor.door_entry_sensors
         show_name: true
         show_state: true
+        icon: mdi:door-closed
+        tap_action:
+          action: none
       - type: entity
         entity: binary_sensor.window_entry_sensors
         show_name: true
         show_state: true
+        icon: mdi:window-closed-variant
+        tap_action:
+          action: none
       - type: entity
         entity: person.kevin_mcdonald
         show_name: true
         show_state: true
+        tap_action:
+          action: none
       - type: entity
         entity: person.jordan_cassino
         show_name: true
         show_state: true
+        tap_action:
+          action: none
     sections:
       - type: grid
         cards:
@@ -47,8 +59,28 @@ views:
             label: "[[[ return entity.state === 'on' ? 'Something is open' : 'All closed'; ]]]"
             grid_options:
               columns: full
+          - type: custom:button-card
+            template: wn_status
+            entity: alarm_control_panel.home_alarm
+            name: Alarm
+            grid_options:
+              columns: full
+          - type: custom:button-card
+            template: wn_status
+            entity: person.kevin_mcdonald
+            name: Kevin
+            grid_options:
+              columns: 6
+          - type: custom:button-card
+            template: wn_status
+            entity: person.jordan_cassino
+            name: Jordan
+            grid_options:
+              columns: 6
           - type: tile
             entity: alarm_control_panel.home_alarm
+            name: Arm / disarm
+            hide_state: true
             features:
               - type: alarm-modes
                 modes: [armed_home, armed_away, disarmed]
@@ -70,7 +102,7 @@ views:
               columns: 6
           - type: tile
             entity: light.bedroom_light_1
-            name: Primary Bedroom
+            name: Bedroom
             grid_options:
               columns: 6
           - type: tile
@@ -96,12 +128,11 @@ views:
         cards:
           - type: heading
             heading: Weather
-          - type: tile
+          - type: weather-forecast
             entity: weather.local_weather_tracker
-            features:
-              - type: temperature-forecast
-                forecast_type: daily
-                days_to_show: 5
+            name: Weather
+            forecast_type: daily
+            show_current: true
+            show_forecast: true
             grid_options:
               columns: full
-              rows: 3

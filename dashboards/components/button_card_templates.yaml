@@ -47,6 +47,11 @@ wn_alert:
     name:
       - font-size: var(--wn-font-lg)
       - font-weight: 600
+      - justify-self: start
+      - text-align: left
+    label:
+      - justify-self: start
+      - text-align: left
     icon:
       - color: var(--wn-ok)
   state:
@@ -60,3 +65,26 @@ wn_alert:
           - color: var(--wn-warn)
     - value: "off"
       icon: mdi:shield-check
+
+# Key status readable across the room: small name above a large state.
+# Set entity and name on the card. Tap opens more-info.
+wn_status:
+  template: wn_base
+  show_state: true
+  layout: icon_name_state2nd
+  tap_action:
+    action: more-info
+  styles:
+    grid:
+      - grid-template-areas: '"i n" "i s"'
+      - grid-template-columns: var(--wn-touch-min) 1fr
+      - column-gap: var(--wn-gap)
+    name:
+      - justify-self: start
+      - font-size: var(--wn-font-sm)
+      - color: var(--wn-text-secondary)
+    state:
+      - justify-self: start
+      - font-size: var(--wn-font-xl)
+      - font-weight: 600
+      - color: var(--wn-text)

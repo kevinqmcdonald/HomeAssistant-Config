@@ -59,6 +59,8 @@ Run every command from the repo root. The ha-mcp tools are deferred. Load them f
      **integration** through `/browser_mod.js`, so it never appears in the plugin list.
    - `/local/sunset-predictor-card.js`: a known manual resource of unknown origin, already
      recorded in the catalogue.
+   - `/local/fonts/inter.css` (any `?v=`): the Walnut theme's Inter font, a `css` resource
+     served from the repo's `www/fonts/`.
 
 ## Report format
 

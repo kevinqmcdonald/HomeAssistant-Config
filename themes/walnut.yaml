@@ -50,7 +50,7 @@ Walnut:
   # Values mirror wn-dim (0.45) and wn-bg-image; change them together.
   lovelace-background: >-
     linear-gradient(rgba(10, 6, 3, 0.45), rgba(10, 6, 3, 0.45)) fixed,
-    url("/local/backgrounds/walnut.jpg") center / cover no-repeat fixed
+    url("/local/backgrounds/walnut.jpg") center / cover no-repeat fixed #16100b
 
   # --- Typography ---------------------------------------------------
   primary-font-family: var(--wn-font)
@@ -119,8 +119,13 @@ Walnut:
       wn-mode: dark
 
   # --- Global card-mod rules ----------------------------------------
+  # hui-card-features sets its own --feature-height (42px) on :host, so the
+  # theme variable alone never reaches it; set it on the element from outside.
   card-mod-card: |
     ha-card {
       backdrop-filter: blur(var(--wn-blur));
       -webkit-backdrop-filter: blur(var(--wn-blur));
+    }
+    hui-card-features {
+      --feature-height: var(--wn-touch-min);
     }
