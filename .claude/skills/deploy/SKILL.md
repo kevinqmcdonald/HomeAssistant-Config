@@ -20,6 +20,15 @@ The Pi runs the **Git pull add-on** (`core_git_pull`). It polls `origin/main` ev
 without asking, which means the push is the step that needs the user's explicit
 go-ahead. Nothing after the push can be undone before the restart happens.
 
+Since 2026-11-23 `restart_ignore` also lists `dashboards/`, `themes/` and `www/`.
+Changes there are picked up without a restart:
+- `dashboards/` and `www/`: a browser refresh shows them. YAML dashboards are re-read
+  on page load. `/local/` files are cached by clients, so tell the user to hard-refresh
+  or use **Settings > Reset frontend cache** in the Companion app.
+- `themes/`: HA only re-reads themes on `frontend.reload_themes`. Step 4 offers it.
+- **Exception:** registering a *new* YAML dashboard under `lovelace: dashboards:` in
+  `configuration.yaml` is a `configuration.yaml` change, so it restarts HA.
+
 Re-read the add-on config at the start of every deploy, because the user may have
 changed it: `ha_get_app(slug="core_git_pull")` → `options.auto_restart`,
 `options.restart_ignore`, `options.repeat.interval`, `options.git_branch`. If any
@@ -65,6 +74,8 @@ directory prefix. Every other entry is an exact path.
   interval.
 - **All files ignored** (e.g. only `.claude/`, `CLAUDE.md`, `README.md`) → the push
   pulls without a restart.
+- **All files ignored, and some are in `themes/`** → say "No restart; themes need a
+  reload after the pull (I'll ask before running it)".
 
 Then ask the user **one** question, using AskUserQuestion, that gives:
 - the file list and a one-line summary of what changes,
@@ -106,7 +117,7 @@ What to look for, newest first:
 | `Nothing has changed.` after your push time | The poll didn't see your commit | Check that `origin/main` has your commit. Wait one more interval. |
 | Config check failure / "does not pass the config check" | The config was pulled, but HA was **not** restarted. The Pi is now running old config, with broken config on disk. | Report the error verbatim. Fix it locally and redeploy. Don't restart HA. |
 | Restart message | HA is restarting | Go to step 5 |
-| Only ignored files changed / no restart required | Done, no restart | Go to step 5 (logs only) |
+| Only ignored files changed / no restart required | Done, no restart | If `themes/` changed, ask (AskUserQuestion) before calling `frontend.reload_themes` via `ha_call_service`. Then go to step 5 (logs only). |
 
 Speeding it up is optional. Restarting the add-on (`ha_manage_app(slug="core_git_pull",
 action="restart")`) pulls straight away, and it **also triggers the HA restart
@@ -131,7 +142,7 @@ anything the user still has to do (such as adding a secret on the Pi).
 | Mistake | Why it's wrong |
 | --- | --- |
 | Pushing first and asking afterwards | The push is the restart. There's nothing left to ask about. |
-| Calling `ha_restart` or a reload after the deploy "to be safe" | The add-on already restarted HA. A second restart affects the house twice. |
+| Calling `ha_restart` or a reload after the deploy "to be safe" | The add-on already restarted HA. A second restart affects the house twice. The only post-pull reload this skill offers is `frontend.reload_themes`, and only when themes changed, after asking. |
 | Treating a failed add-on config check as "nothing happened" | The broken config is now on disk on the Pi. The next manual restart will load it. |
 | `git add -A` | Picks up stray files, and the whitelist may silently drop the files you meant to ship. |
 | Skipping the secret check because yamllint passed | yamllint can't see the Pi's `secrets.yaml`. |
