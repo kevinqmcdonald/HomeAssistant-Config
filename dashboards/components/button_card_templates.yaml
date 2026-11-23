@@ -1,0 +1,32 @@
+######################################################################
+# -------------------------------------------------------------------
+# House components - button-card templates
+#  Shared by every dashboard via
+#  `button_card_templates: !include components/button_card_templates.yaml`.
+#  Values come only from theme tokens (--wn-*); see
+#  .claude/reference/dashboard-style-guide.md for the component index.
+# -------------------------------------------------------------------
+######################################################################
+
+# Base for every house button. The frosted surface, border and radius come from
+# the theme's card-mod-card rule (it styles every ha-card), so they are not repeated here.
+wn_base:
+  section_mode: true
+  show_state: false
+  styles:
+    card:
+      - min-height: var(--wn-touch-min)
+      - padding: var(--wn-gap)
+      - font-family: var(--wn-font)
+      - color: var(--wn-text)
+    name:
+      - font-size: var(--wn-font-md)
+      - color: var(--wn-text)
+    label:
+      - font-size: var(--wn-font-sm)
+      - color: var(--wn-text-secondary)
+    state:
+      - font-size: var(--wn-font-sm)
+      - color: var(--wn-text-secondary)
+    icon:
+      - color: var(--wn-accent-gold)
