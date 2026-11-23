@@ -1,0 +1,3 @@
+# Fixture: missing include
+views:
+  - !include views/nope.yaml

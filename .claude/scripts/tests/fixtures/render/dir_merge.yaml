@@ -1,0 +1,3 @@
+# Fixture: directory includes
+merged: !include_dir_merge_named templates_dir
+listed: !include_dir_list templates_dir

@@ -1,0 +1,8 @@
+# Fixture: dashboard with includes
+button_card_templates: !include components/button_card_templates.yaml
+views:
+  - !include views/home/home.yaml
+  - title: Other
+    path: other
+    theme: Other
+    cards: []

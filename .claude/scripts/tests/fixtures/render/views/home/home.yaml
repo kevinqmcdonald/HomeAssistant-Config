@@ -1,0 +1,5 @@
+# Fixture: view that includes a partial two levels up
+title: Home
+path: home
+cards:
+  - !include ../../components/partials/clock.yaml

@@ -1,0 +1,3 @@
+# Fixture: partial
+type: custom:clock-weather-card
+entity: weather.home
