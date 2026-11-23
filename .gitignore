@@ -14,6 +14,9 @@
 !scene/
 !dashboards/
 !dashboards/**
+# www/: only backgrounds/ and fonts/ are tracked (each needs its dir and its contents re-included)
+!www/
+www/*
 !www/backgrounds/
 !www/backgrounds/**
 !www/fonts/
@@ -29,9 +32,7 @@
 
 # Specific folder ignores
 .claude/plans/
-.claude/plans/**
 .claude/specs/
-.claude/specs/**
 custom_components/
 __pycache__/
 *.pyc
