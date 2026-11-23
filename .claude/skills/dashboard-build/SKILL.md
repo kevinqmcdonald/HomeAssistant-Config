@@ -66,7 +66,9 @@ List them in the hand-over.
 
 **6. Hand-over to Kevin.** Capture the main view yourself at the three sizes
 (`ha_get_dashboard_screenshot`, url_path `dashboard-scratch`, widths 1715/384/2372, heights
-965/798/1294, plus `theme` if deployed) so he can see it. Passing `theme` can persist on
+965/798/1294, plus `theme` if deployed) so he can see it. Capture **one at a time**
+(the Pi's engine times out on parallel full-size renders), with `wait_ms=10000`, because
+icons often render blank at shorter waits. Passing `theme` can persist on
 the screenshot engine's user. Read `ha_manage_theme(action="get_engine_theme")` before the
 captures. If it changed afterwards, restore it with `set_engine_theme`, passing the
 **inner** `{"dark": …, "theme": …}` object as `value` and the current one as
