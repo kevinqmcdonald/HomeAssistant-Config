@@ -14,7 +14,6 @@
 !scene/
 !dashboards/
 !dashboards/**
-!www/
 !www/backgrounds/
 !www/backgrounds/**
 !www/fonts/
@@ -28,14 +27,12 @@
 !.gitkeep
 !*.md
 
-# Only www/backgrounds/ and www/fonts/ are tracked; the rest of www/ stays local
-www/*
-!www/backgrounds/
-!www/fonts/
-
 # Specific folder ignores
+.claude/plans/
+.claude/plans/**
+.claude/specs/
+.claude/specs/**
 custom_components/
-www/community/
 __pycache__/
 *.pyc
 blueprints/**/homeassistant/
