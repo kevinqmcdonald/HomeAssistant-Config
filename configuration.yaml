@@ -14,9 +14,6 @@ default_config:
 frontend:
   # Load frontend themes from the themes folder
   themes: !include_dir_merge_named themes
-  # Card Mod module
-  extra_module_url:
-    - /hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524421
 
 # Logging configuration
 logger: !include logger.yaml
