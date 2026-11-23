@@ -21,6 +21,7 @@ My Home Assistant configuration, written in YAML and organized by type, with sel
 | [packages/](packages/) | Self-contained subsystems (security, media, a room's lighting) | `!include_dir_named` |
 | [blueprints/](blueprints/) | Imported automation and script blueprints | HA blueprint loader |
 | [themes/](themes/) | card-mod themes | `!include_dir_merge_named` |
+| [dashboards/](dashboards/) | YAML-mode Lovelace dashboards and their shared components | `lovelace: dashboards:` (per file) |
 | [logger.yaml](logger.yaml), [recorder.yaml](recorder.yaml) | Log levels and history retention | `!include` |
 
 ### UI and YAML side by side
