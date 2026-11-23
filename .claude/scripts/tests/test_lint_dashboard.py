@@ -36,6 +36,11 @@ class LintDashboardTest(unittest.TestCase):
         self.assertEqual(sorted(f.where for f in found), ["line 12", "line 15"])
         self.assertTrue(all(f.severity == "error" for f in found))
 
+    def test_colour_message_quotes_full_literal(self):
+        found = {f.where: f.message for f in by_rule(lint("bad.yaml"), "hardcoded-color")}
+        self.assertIn("rgba(180,130,80,0.15)", found["line 15"])
+        self.assertIn("#c47a3a", found["line 12"])
+
     def test_token_colours_not_flagged(self):
         self.assertEqual(by_rule(lint("good.yaml"), "hardcoded-color"), [])
 

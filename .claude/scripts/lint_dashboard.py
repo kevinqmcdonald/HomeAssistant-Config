@@ -39,7 +39,7 @@ from render_dashboard import DashboardLoadError, load_dashboard_with_files  # no
 
 DEFAULT_ALLOWLIST = os.path.join(".claude", "reference", "installed-cards.yaml")
 HEX_RE = re.compile(r"#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b")
-FUNC_RE = re.compile(r"\b(?:rgba?|hsla?)\((?!\s*var\()")
+FUNC_RE = re.compile(r"\b(?:rgba?|hsla?)\((?!\s*var\()[^)]*\)?")
 IGNORE_COLOR = "lint-ignore: hardcoded-color"
 TEMPLATE_MIN_LEN = 80
 
