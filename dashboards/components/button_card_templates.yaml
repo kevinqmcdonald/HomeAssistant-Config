@@ -88,3 +88,8 @@ wn_status:
       - font-size: var(--wn-font-xl)
       - font-weight: 600
       - color: var(--wn-text)
+    # Icon follows the theme's state colour (e.g. disarmed / home = --wn-ok green),
+    # so it matches tiles and badges for the same entity. Gold if the theme has none.
+    icon:
+      - color: >-
+          [[[ return `var(--state-${entity.entity_id.split('.')[0]}-${entity.state}-color, var(--wn-accent-gold))`; ]]]

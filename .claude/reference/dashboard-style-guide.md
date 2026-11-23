@@ -94,6 +94,7 @@ must approve it. After installing, add it to `installed-cards.yaml` and the cata
 
 - Every tappable element on the tablet and phone is ≥ `--wn-touch-min` (48px) in both
   dimensions.
+- On/off tiles (lights, switches) use `tap_action: toggle` so the whole ~56px tile is the target. Put `icon_tap_action: more-info` on the smaller icon for details.
 - No action reachable only by long-press or double-tap on the tablet. Guests won't find it.
 - Tablet body text ≥ `--wn-font-md`, and key status (alarm, doors, who's home) ≥ `--wn-font-lg`,
   so it reads from across the room.

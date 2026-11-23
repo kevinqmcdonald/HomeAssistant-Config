@@ -82,6 +82,11 @@ Walnut:
   state-alarm_control_panel-armed_home-color: var(--wn-accent-blue)
   state-alarm_control_panel-armed_away-color: var(--wn-accent-blue)
   state-alarm_control_panel-triggered-color: var(--wn-alert)
+  # Presence: same green as "safe" states, so badges and wn_status agree
+  state-person-home-color: var(--wn-ok)
+  state-person-not_home-color: var(--wn-text-secondary)
+  state-device_tracker-home-color: var(--wn-ok)
+  state-device_tracker-not_home-color: var(--wn-text-secondary)
 
   # Chrome
   app-header-background-color: "rgba(12, 8, 5, 0.6)"
@@ -119,8 +124,9 @@ Walnut:
       wn-mode: dark
 
   # --- Global card-mod rules ----------------------------------------
-  # hui-card-features sets its own --feature-height (42px) on :host, so the
-  # theme variable alone never reaches it; set it on the element from outside.
+  # hui-card-features and ha-tile-info set their own sizes on :host, so theme
+  # variables alone never reach them; set them on the elements from outside.
+  # Tile text: name 16px / state 14px, so it's readable on the wall tablet.
   card-mod-card: |
     ha-card {
       backdrop-filter: blur(var(--wn-blur));
@@ -128,4 +134,10 @@ Walnut:
     }
     hui-card-features {
       --feature-height: var(--wn-touch-min);
+    }
+    ha-tile-info {
+      --ha-tile-info-primary-font-size: var(--wn-font-md);
+      --ha-tile-info-secondary-font-size: var(--wn-font-sm);
+      --tile-info-primary-font-size: var(--wn-font-md);
+      --tile-info-secondary-font-size: var(--wn-font-sm);
     }
