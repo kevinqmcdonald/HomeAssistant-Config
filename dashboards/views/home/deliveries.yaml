@@ -1,0 +1,110 @@
+######################################################################
+# -------------------------------------------------------------------
+# Home dashboard - Deliveries view
+#  USPS mail, today's packages by carrier, and tracking numbers.
+#  Carrier logos are live files in www/ (not tracked in this repo).
+# -------------------------------------------------------------------
+######################################################################
+
+title: Deliveries
+path: deliveries
+icon: mdi:package-variant-closed
+theme: Walnut
+type: sections
+max_columns: 2
+sections:
+  - type: grid
+    cards:
+      - type: heading
+        heading: Mail
+      - type: tile
+        entity: sensor.package_tracker_mail_usps_mail
+        name: USPS mail
+        icon: mdi:mailbox
+        color: primary
+        state_content: [state, last_updated]
+        grid_options:
+          columns: full
+      - type: heading
+        heading: Packages today
+      - type: custom:button-card
+        template: wn_carrier
+        name: USPS
+        variables:
+          transit: sensor.package_tracker_mail_usps_packages
+          delivered: sensor.package_tracker_mail_usps_delivered
+          logo: /local/usps.png
+        grid_options:
+          columns: full
+          rows: auto
+      - type: custom:button-card
+        template: wn_carrier
+        name: UPS
+        variables:
+          transit: sensor.package_tracker_mail_ups_packages
+          delivered: sensor.package_tracker_mail_ups_delivered
+          logo: /local/ups.png
+        grid_options:
+          columns: full
+          rows: auto
+      - type: custom:button-card
+        template: wn_carrier
+        name: FedEx
+        variables:
+          transit: sensor.package_tracker_mail_fedex_packages
+          delivered: sensor.package_tracker_mail_fedex_delivered
+          logo: /local/fedex.jpeg
+        grid_options:
+          columns: full
+          rows: auto
+      - type: custom:button-card
+        template: wn_carrier
+        name: Amazon
+        variables:
+          transit: sensor.package_tracker_mail_amazon_packages
+          delivered: sensor.package_tracker_mail_amazon_packages_delivered
+          logo: /local/amazon-wh.png
+        grid_options:
+          columns: full
+          rows: auto
+      - type: custom:button-card
+        template: wn_carrier
+        name: Walmart
+        variables:
+          transit: sensor.package_tracker_mail_walmart_packages
+          delivered: sensor.package_tracker_mail_walmart_delivered
+          logo: /local/walmart.png
+        grid_options:
+          columns: full
+          rows: auto
+
+  - type: grid
+    cards:
+      - type: custom:tracking-number-card
+        entity: sensor.package_tracking_numbers
+        title: Tracking Numbers
+        sort_by: first_seen
+        sort_direction: desc
+        # 48px targets for the link and copy button. "ha-card" in front so these
+        # outrank the card's own rules.
+        card_mod:
+          style: |
+            ha-card .tracking-link {
+              min-height: var(--wn-touch-min);
+              overflow-wrap: anywhere;
+            }
+            ha-card .copy-button {
+              min-width: var(--wn-touch-min);
+              min-height: var(--wn-touch-min);
+              justify-content: center;
+              flex: none;
+            }
+            ha-card .tracking-link ha-icon,
+            ha-card .copy-button ha-icon {
+              --mdc-icon-size: var(--wn-font-lg);
+            }
+            ha-card .package-header {
+              margin-bottom: 0;
+            }
+        grid_options:
+          columns: full

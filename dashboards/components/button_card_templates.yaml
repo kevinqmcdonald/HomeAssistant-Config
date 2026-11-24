@@ -10,6 +10,9 @@
 
 # Base for every house button. The frosted surface, border and radius come from
 # the theme's card-mod-card rule (it styles every ha-card), so they are not repeated here.
+# Set grid_options `rows: auto` on every card: section_mode defaults to 2 rows (120px).
+# v7 re-renders when any entity read through states[...] changes, so there is no
+# triggers_update.
 wn_base:
   section_mode: true
   show_state: false
@@ -31,6 +34,11 @@ wn_base:
     icon:
       - color: var(--wn-accent-gold)
       - width: var(--wn-icon-size)
+    # button-card positions icons absolutely, so the cell needs a size of its own
+    # or the icon collapses in an auto-height row or a max-content column.
+    img_cell:
+      - width: var(--wn-touch-min)
+      - height: var(--wn-icon-size)
 
 # Full-width status banner for a binary entity: warn styling when "on", ok when "off".
 # Set entity, name and label on the card.
@@ -52,6 +60,8 @@ wn_alert:
     label:
       - justify-self: start
       - text-align: left
+      - font-size: var(--wn-font-lg)
+      - color: var(--wn-text)
     icon:
       - color: var(--wn-ok)
   state:
@@ -81,7 +91,7 @@ wn_status:
       - column-gap: var(--wn-gap)
     name:
       - justify-self: start
-      - font-size: var(--wn-font-sm)
+      - font-size: var(--wn-font-md)
       - color: var(--wn-text-secondary)
     # State shrinks from --wn-font-xl (28px) towards --wn-font-lg (20px) as the card
     # narrows (container units), so a half-width card on the phone fits "Driving".
@@ -97,11 +107,117 @@ wn_status:
     # Icon follows the theme's state colour (e.g. disarmed / home = --wn-ok green),
     # so it matches tiles and badges for the same entity. Gold if the theme has none.
     # A person/device_tracker in any other zone uses HA's "zone" state colour.
+    # Unknown / unavailable is grey, so it never looks like a real state.
     icon:
       - color: >-
           [[[
             const d = entity.entity_id.split('.')[0];
             let s = entity.state;
+            if (['unknown', 'unavailable'].includes(s)) return 'var(--wn-text-secondary)';
             if (['person', 'device_tracker'].includes(d) && !['home', 'not_home'].includes(s)) s = 'zone';
             return `var(--state-${d}-${s}-color, var(--wn-accent-gold))`;
           ]]]
+
+# One-tap action, highlighted while the entity is in `active_state`.
+# Set entity, name, icon, tap_action (and confirmation) on the card.
+# Icon beside the name on wide screens, above it on the phone.
+wn_action:
+  template: wn_base
+  layout: icon_name
+  variables:
+    active_state: ""
+    active: "[[[ return entity.state === variables.active_state; ]]]"
+    color: "[[[ return variables.active_state === 'disarmed' ? 'var(--wn-ok)' : 'var(--primary-color)'; ]]]"
+  styles:
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: max-content max-content
+      - justify-content: center
+      - column-gap: 10px
+    img_cell:
+      - width: var(--wn-icon-size)
+    card:
+      - padding: var(--wn-gap) 8px
+      - background: "[[[ return variables.active ? `color-mix(in srgb, ${variables.color} 26%, var(--wn-surface))` : ''; ]]]"
+      - border-color: "[[[ return variables.active ? variables.color : ''; ]]]"
+    name:
+      - font-weight: 500
+    icon:
+      - color: var(--wn-text)
+  extra_styles: |
+    @media (max-width: 1023px) {
+      #container {
+        grid-template-areas: "i" "n" !important;
+        grid-template-columns: 1fr !important;
+      }
+      #name {
+        margin-top: 4px;
+      }
+    }
+
+# Attention notice: icon and a short label. Show it with a visibility condition.
+# tone: warn (amber, default) or info (blue).
+wn_notice:
+  template: wn_base
+  layout: icon_name
+  variables:
+    tone: warn
+    color: "[[[ return variables.tone === 'info' ? 'var(--primary-color)' : 'var(--wn-warn)'; ]]]"
+  styles:
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-columns: 36px 1fr
+      - column-gap: 8px
+    img_cell:
+      - width: 36px
+    card:
+      - padding: var(--wn-gap) 10px
+      - border-color: "[[[ return `color-mix(in srgb, ${variables.color} 55%, transparent)`; ]]]"
+    name:
+      - justify-self: start
+      - text-align: left
+      - white-space: normal
+    icon:
+      - color: "[[[ return variables.color; ]]]"
+
+# Package counts for one carrier. variables: transit, delivered (entity IDs), logo (path).
+# Dimmed when both counts are 0.
+wn_carrier:
+  template: wn_base
+  show_label: true
+  show_entity_picture: true
+  show_icon: true
+  entity_picture: "[[[ return variables.logo; ]]]"
+  layout: icon_name_label
+  tap_action:
+    action: none
+  variables:
+    transit: ""
+    delivered: ""
+    logo: ""
+    n_transit: "[[[ const v = parseInt(states[variables.transit]?.state); return isNaN(v) ? '?' : v; ]]]"
+    n_delivered: "[[[ const v = parseInt(states[variables.delivered]?.state); return isNaN(v) ? '?' : v; ]]]"
+    idle: "[[[ return variables.n_transit === 0 && variables.n_delivered === 0; ]]]"
+  label: "[[[ return `${variables.n_transit} in transit · ${variables.n_delivered} delivered`; ]]]"
+  styles:
+    grid:
+      - grid-template-areas: '"i n" "i l"'
+      - grid-template-columns: var(--wn-touch-min) 1fr
+      - column-gap: var(--wn-gap)
+    img_cell:
+      - height: var(--wn-touch-min)
+    card:
+      - padding: 8px var(--wn-gap)
+    name:
+      - justify-self: start
+      - font-weight: 500
+      - color: "[[[ return variables.idle ? 'var(--wn-text-secondary)' : 'var(--wn-text)'; ]]]"
+    label:
+      - justify-self: start
+      - font-size: var(--wn-font-md)
+      - color: "[[[ return variables.n_transit > 0 ? 'var(--wn-accent-gold)' : 'var(--wn-text-secondary)'; ]]]"
+    entity_picture:
+      - width: 40px
+      - height: 40px
+      - border-radius: 10px
+      - filter: "[[[ return variables.idle ? 'grayscale(1) opacity(0.7)' : 'none'; ]]]"

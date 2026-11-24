@@ -29,19 +29,40 @@ The ha-mcp tools are deferred. Load them first with
 
 Use exactly these sizes. Never use the tool's `viewport_presets`.
 
+## Capture safety
+
+The screenshot engine shares its hardware with Home Assistant, and heavy or parallel
+captures can slow HA down badly. A skipped screenshot is cheap. A slow house is not.
+These rules have no exceptions, whatever the caller asks:
+
+- **One capture at a time.** Never two tool calls in one message while capturing.
+- **Fixed sizes only.** Never `height="auto"`, `full_page=True` or `viewport_presets`.
+- **Light views first.** Leave views with a radar, map, camera or calendar to the end.
+- **Health check between captures:** one `ha_manage_theme(action="get_engine_theme")`. If
+  it errors or times out, stop. Make no more ha-mcp calls.
+- **Stop on the first failed or timed-out capture.** Don't retry it. A client timeout
+  doesn't cancel the render on the Pi, so a retry stacks a second one on top. Make the
+  health check, restore the theme (step 6) and report.
+- **Never raise `render_timeout_seconds`** above its default.
+- **Never capture the Home dashboard's `home` view** (on `dashboard-home` or
+  `dashboard-scratch`). It's too heavy for the engine. Report it as "check on the real
+  devices".
+- Put every view × device you didn't capture in the report as "not reviewed". Never infer
+  a PASS for it.
+
 ## Procedure
 
 1. `ha_manage_theme(action="get_engine_theme")`. Record the value exactly.
 2. Read the dashboard config with `ha_config_get_dashboard(url_path=...)`. You need it
    to name the cards behind each finding (by JSON pointer, e.g.
    `/views/0/sections/1/cards/2`).
-3. For each view × device, capture it:
-   `ha_get_dashboard_screenshot(url_path=..., view_path=..., width=W, height="auto", wait_ms=4000, image_format="jpeg", theme=<theme if given>)`.
-   - **Check the capture is complete.** The bottom of the last section must be visible.
-     `height="auto"` has come back at the default 800 px with no warning. If the view
-     looks cut off, re-capture with `full_page=True`.
-   - **Blank vs empty.** If a capture shows blank icons or spinners, re-capture that one
-     with `wait_ms=10000`. If it's still blank, report it with "verify on real device".
+3. For each view × device, following the safety rules, capture it:
+   `ha_get_dashboard_screenshot(url_path=..., view_path=..., width=W, height=H, wait_ms=10000, image_format="jpeg", theme=<theme if given>)`.
+   - **Check the capture is complete.** If the bottom of the last section isn't visible
+     on the phone, take one more with a taller fixed height (e.g. 1600). Don't do this for
+     a view whose visibility rules depend on height. Say what you couldn't see.
+   - **Blank vs empty.** Don't re-capture blank icons or spinners. Report them as "verify
+     on real device".
      The engine has shown blank Mushroom icons that may not happen on real clients. A
      card that is *legitimately* empty (e.g. auto-entities with no matches, a filter list
      with nothing to show) is not a render failure. Check the config and state, and

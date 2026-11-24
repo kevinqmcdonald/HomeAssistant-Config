@@ -1,0 +1,445 @@
+######################################################################
+# -------------------------------------------------------------------
+# Home dashboard - Home view
+#  House status, weather and the week, without scrolling on the tablet.
+#  Trash day is defined once (&trash): in Today on wide screens, and in
+#  its own section above the weather on the phone.
+# -------------------------------------------------------------------
+######################################################################
+
+title: Home
+path: home
+icon: mdi:home
+theme: Walnut
+type: sections
+max_columns: 3
+sections:
+  - type: grid
+    cards:
+      - type: heading
+        heading: Home
+      # Also counts sensors that aren't responding, so the banner never claims
+      # "All closed" without knowing.
+      - type: custom:button-card
+        template: wn_alert
+        entity: binary_sensor.is_any_entry_sensor_open
+        name: Doors & windows
+        variables:
+          sensors: >-
+            [[[
+              return ['binary_sensor.door_entry_sensors', 'binary_sensor.window_entry_sensors']
+                .flatMap(g => states[g]?.attributes.entity_id || [g])
+                .concat('binary_sensor.backyard_gate_sensor');
+            ]]]
+          open: >-
+            [[[
+              return variables.sensors
+                .filter(id => states[id]?.state === 'on')
+                .map(id => states[id].attributes.friendly_name.replace(' Sensor', ''));
+            ]]]
+          silent: >-
+            [[[
+              return variables.sensors.filter(id => !['on', 'off'].includes(states[id]?.state)).length;
+            ]]]
+        label: >-
+          [[[
+            const parts = [];
+            if (variables.open.length) parts.push('Open: ' + variables.open.join(', '));
+            if (variables.silent) parts.push(variables.silent + ' not responding');
+            return parts.join(' · ') || 'All closed';
+          ]]]
+        styles:
+          label:
+            - white-space: normal
+          icon:
+            - color: "[[[ return variables.silent ? 'var(--wn-warn)' : 'var(--wn-ok)'; ]]]"
+        tap_action:
+          action: navigate
+          navigation_path: /dashboard-security/sensors-health
+        grid_options:
+          columns: full
+          rows: auto
+      - type: custom:button-card
+        template: wn_status
+        entity: alarm_control_panel.home_alarm
+        name: Alarm
+        grid_options:
+          columns: full
+          rows: auto
+      - type: custom:button-card
+        template: wn_action
+        entity: alarm_control_panel.home_alarm
+        name: Arm home
+        icon: mdi:shield-home
+        variables:
+          active_state: armed_home
+        tap_action:
+          action: perform-action
+          perform_action: alarm_control_panel.alarm_arm_home
+          target:
+            entity_id: alarm_control_panel.home_alarm
+        grid_options:
+          columns: 4
+          rows: auto
+      - type: custom:button-card
+        template: wn_action
+        entity: alarm_control_panel.home_alarm
+        name: Arm away
+        icon: mdi:shield-lock
+        variables:
+          active_state: armed_away
+        tap_action:
+          action: perform-action
+          perform_action: alarm_control_panel.alarm_arm_away
+          target:
+            entity_id: alarm_control_panel.home_alarm
+        grid_options:
+          columns: 4
+          rows: auto
+      # Ask first, to prevent accidents.
+      - type: custom:button-card
+        template: wn_action
+        entity: alarm_control_panel.home_alarm
+        name: Disarm
+        icon: mdi:shield-off
+        variables:
+          active_state: disarmed
+        confirmation:
+          text: Disarm the alarm?
+        tap_action:
+          action: perform-action
+          perform_action: alarm_control_panel.alarm_disarm
+          target:
+            entity_id: alarm_control_panel.home_alarm
+        grid_options:
+          columns: 4
+          rows: auto
+      - type: custom:button-card
+        template: wn_status
+        entity: person.kevin_mcdonald
+        name: Kevin
+        tap_action: &to_map
+          action: navigate
+          navigation_path: /home-dashboard/map
+        grid_options:
+          columns: 6
+          rows: auto
+      - type: custom:button-card
+        template: wn_status
+        entity: person.jordan_cassino
+        name: Jordan
+        tap_action: *to_map
+        grid_options:
+          columns: 6
+          rows: auto
+      - type: custom:button-card
+        template: wn_status
+        entity: person.toby
+        name: Toby
+        icon: mdi:dog
+        tap_action: *to_map
+        grid_options:
+          columns: 6
+          rows: auto
+      - type: custom:button-card
+        template: wn_status
+        entity: person.louie
+        name: Louie
+        icon: mdi:dog
+        tap_action: *to_map
+        grid_options:
+          columns: 6
+          rows: auto
+      - type: custom:button-card
+        template: wn_notice
+        entity: binary_sensor.music_playing_anywhere
+        name: Music playing
+        icon: mdi:music
+        variables:
+          tone: info
+        tap_action:
+          action: navigate
+          navigation_path: /home-dashboard/entertainment
+        visibility:
+          - condition: state
+            entity: binary_sensor.music_playing_anywhere
+            state: "on"
+        grid_options:
+          columns: 6
+          rows: auto
+      - type: custom:button-card
+        template: wn_notice
+        entity: binary_sensor.package_arriving_today
+        name: Package today
+        icon: mdi:package-variant-closed
+        variables:
+          tone: info
+        tap_action:
+          action: navigate
+          navigation_path: /home-dashboard/deliveries
+        visibility:
+          - condition: state
+            entity: binary_sensor.package_arriving_today
+            state: "on"
+        grid_options:
+          columns: 6
+          rows: auto
+      - type: custom:button-card
+        template: wn_notice
+        entity: binary_sensor.car_gas_low
+        name: Car gas low
+        icon: mdi:gas-station
+        visibility:
+          - condition: state
+            entity: binary_sensor.car_gas_low
+            state: "on"
+        grid_options:
+          columns: 6
+          rows: auto
+      - type: custom:button-card
+        template: wn_notice
+        entity: binary_sensor.oven_is_running
+        name: Oven is on
+        icon: mdi:stove
+        visibility:
+          - condition: state
+            entity: binary_sensor.oven_is_running
+            state: "on"
+        grid_options:
+          columns: 6
+          rows: auto
+      - type: custom:button-card
+        template: wn_notice
+        entity: binary_sensor.is_any_security_device_battery_low
+        name: Sensor battery
+        icon: mdi:battery-alert
+        tap_action:
+          action: navigate
+          navigation_path: /dashboard-security/sensors-health
+        visibility:
+          - condition: state
+            entity: binary_sensor.is_any_security_device_battery_low
+            state: "on"
+        grid_options:
+          columns: 6
+          rows: auto
+      - type: custom:simple-timer-card
+        style: circle
+        show_active_header: false
+        show_timer_presets: false
+        entities:
+          - sensor.office_echo_dot_next_timer_2
+          - sensor.kitchen_echo_dot_next_timer
+          - sensor.primary_bedroom_echo_show_next_timer_2
+        visibility:
+          - condition: or
+            conditions:
+              - condition: state
+                entity: sensor.kitchen_echo_dot_next_timer
+                state_not: [unknown, unavailable]
+              - condition: state
+                entity: sensor.office_echo_dot_next_timer_2
+                state_not: [unknown, unavailable]
+              - condition: state
+                entity: sensor.primary_bedroom_echo_show_next_timer_2
+                state_not: [unknown, unavailable]
+        grid_options:
+          columns: full
+
+  - type: grid
+    visibility:
+      - condition: screen
+        media_query: "(max-width: 1023px)"
+    cards:
+      - type: heading
+        heading: Trash day
+      - &trash
+        type: custom:trash-card
+        entities:
+          - calendar.garbage_collection
+        event_grouping: true
+        drop_todayevents_from: "10:00:00"
+        next_days: 300
+        # Use only primary / accent here. With a named colour (green, blue...) on a
+        # dark theme, trash-card 2.4.7 sets --primary-text-color to itself, which
+        # breaks the text colour.
+        pattern:
+          - {type: organic, icon: "mdi:flower", color: accent}
+          - {type: paper, icon: "mdi:newspaper", color: primary}
+          - {type: recycle, icon: "mdi:recycle", color: accent, pattern: Recycle, label: Recycle}
+          - {type: waste, icon: "mdi:trash-can-outline", color: primary, pattern: Trash, label: Trash}
+          - {type: others, icon: "mdi:dump-truck", color: primary}
+        day_style: counter
+        card_style: card
+        color_mode: icon
+        with_label: true
+        items_per_row: 2
+        layout: default
+        full_size: true
+        refresh_rate: 60
+        only_all_day_events: true
+        hide_time_range: false
+        filter_events: false
+        use_summary: false
+        grid_options:
+          columns: full
+          rows: auto
+
+  - type: grid
+    cards:
+      - type: heading
+        heading: Outside
+      - type: weather-forecast
+        entity: weather.local_weather_tracker
+        name: Local weather
+        forecast_type: daily
+        show_current: true
+        show_forecast: true
+        grid_options:
+          columns: full
+      - type: tile
+        entity: sensor.outdoor_uv_index
+        name: UV index
+        color: primary
+        state_content: [state, level]
+        features:
+          - type: bar-gauge
+            min: 0
+            max: 14
+        grid_options:
+          columns: 6
+      - type: tile
+        entity: sensor.outdoor_air_quality
+        name: Air quality
+        color: primary
+        state_content: [state, level]
+        features:
+          - type: bar-gauge
+            min: 0
+            max: 350
+        grid_options:
+          columns: 6
+      - type: custom:weather-radar-card
+        data_source: NOAA
+        theme_mode: dark
+        height: 320px
+        zoom_level: 11
+        # No centre set: the card defaults to HA's own location (this repo is public).
+        markers:
+          - entity: zone.home
+            icon: mdi:home
+            color: var(--wn-text)
+            track: true
+        wind_source: ndfd_wind
+        dwd_wind: "off"
+        dwd_wind_density: 1
+        dwd_wind_size: 0.75
+        dwd_wind_flow: false
+        show_wildfires: false
+        show_alerts: true
+        alerts_radius_km: 50
+        show_zoom: false
+        show_playback: false
+        show_recenter: false
+        show_scale: false
+        show_range: false
+        show_snow: true
+        show_color_bar: true
+        show_progress_bar: false
+        show_loading_spinner: false
+        extra_labels: false
+        static_map: false
+        cluster_markers: true
+        double_tap_action: toggle_play
+        smooth_animation: true
+        motion_compensation: true
+        radar_opacity: 0.9
+        frame_stride_minutes: 5
+        past_minutes: 40
+        grid_options:
+          columns: 12
+          rows: auto
+
+  - type: grid
+    cards:
+      - type: heading
+        heading: Today
+      - <<: *trash
+        visibility:
+          - condition: screen
+            media_query: "(min-width: 1024px)"
+      - type: custom:atomic-calendar-revive
+        name: This Week's Events
+        entities:
+          - entity: calendar.birthdays
+          - entity: calendar.florida_gators_football
+          - entity: calendar.florida_gators_men_s_basketball
+          - entity: calendar.holidays_in_united_states
+          - entity: calendar.household
+          - entity: calendar.jordan
+          - entity: calendar.kevin
+          - entity: calendar.travel
+          - entity: calendar.episodecalendar_com_2
+        showLocation: false
+        showDate: true
+        showDeclined: false
+        showCalendarName: true
+        showNoEventsForToday: true
+        showNoEventDays: true
+        showRelativeTime: false
+        showProgressBar: false
+        showAllDayHours: false
+        showWeekDay: true
+        showTimeRemaining: false
+        firstDayOfWeek: 0
+        eventDateFormat: ddd MMM D
+        descLength: 50
+        compactMode: false
+        hoursOnSameLine: true
+        noEventText: No events scheduled
+        # These colours identify calendars (same as dashboard-calendar), so they
+        # stay literal. Dark text on the light ones.
+        card_mod:
+          style: |
+            .event-title {
+              padding: 2px 4px;
+              border-radius: 4px;
+              margin-top: 2px;
+              color: var(--wn-text) !important;
+            }
+            .event-title.event-title-fullday {
+              font-style: italic;
+              font-weight: bold;
+            }
+            .event-title.cal-household,
+            .event-title.cal-jordan,
+            .event-title.cal-travel {
+              color: var(--primary-background-color) !important;
+            }
+            .event-title.cal-household {
+              background: #F7DC6F; /* lint-ignore: hardcoded-color */
+            }
+            .event-title.cal-kevin {
+              background: #008c00; /* lint-ignore: hardcoded-color */
+            }
+            .event-title.cal-jordan {
+              background: #9CAF88; /* lint-ignore: hardcoded-color */
+            }
+            .event-title.cal-travel {
+              background: #ff9a78; /* lint-ignore: hardcoded-color */
+            }
+            .event-title.cal-birthdays {
+              background: #696969; /* lint-ignore: hardcoded-color */
+            }
+            .event-title.cal-holidays-in-united-states {
+              background: #c9215e; /* lint-ignore: hardcoded-color */
+            }
+            .event-title.cal-florida-gators-football,
+            .event-title.cal-florida-gators-men-s-basketball {
+              background: #0000ff; /* lint-ignore: hardcoded-color */
+            }
+            .event-title.cal-episodecalendar-com-2 {
+              background: #805d4c; /* lint-ignore: hardcoded-color */
+            }
+        grid_options:
+          columns: full

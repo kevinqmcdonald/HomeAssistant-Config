@@ -81,6 +81,7 @@ Walnut:
   state-alarm_control_panel-disarmed-color: var(--wn-ok)
   state-alarm_control_panel-armed_home-color: var(--wn-accent-blue)
   state-alarm_control_panel-armed_away-color: var(--wn-accent-blue)
+  state-alarm_control_panel-pending-color: var(--wn-warn)
   state-alarm_control_panel-triggered-color: var(--wn-alert)
   # Presence: same green as "safe" states, so badges and wn_status agree
   state-person-home-color: var(--wn-ok)

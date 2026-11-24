@@ -110,6 +110,9 @@ House templates live in `dashboards/components/button_card_templates.yaml`. Each
 
 | Template | Purpose | Parameters (`variables:`) |
 | --- | --- | --- |
-| `wn_base` | Base for all house buttons: section-grid sizing, 48px minimum, token typography. Glass surface comes from the theme. | none |
+| `wn_base` | Base for all house buttons: section-grid sizing, 48px minimum, token typography. Glass surface comes from the theme. Set `rows: auto` in each card's `grid_options` (section mode defaults to 2 rows, 120px). | none |
 | `wn_alert` | Full-width status banner for a binary entity: warn styling when `on`, ok styling when `off`. Set `entity`, `name`, `label`. | none |
 | `wn_status` | Key status readable across the room: small name above the state at `--wn-font-xl`. Set `entity` and `name`. Tap opens more-info. | none |
+| `wn_action` | One-tap action button, highlighted while the entity is in a given state. Set `entity`, `name`, `icon`, `tap_action` (and `confirmation`) on the card. | `active_state` |
+| `wn_notice` | Attention notice: icon and a short label. Show it with a `visibility` condition. | `tone` (`warn` default, or `info`) |
+| `wn_carrier` | Package counts for one carrier, dimmed when both are 0. Set `name`. | `transit`, `delivered` (entity IDs), `logo` (image path) |

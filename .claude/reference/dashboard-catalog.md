@@ -14,7 +14,8 @@ Suggesting a new HACS install is allowed, but call it out explicitly as a new de
 
 | url_path | Views | Theme | Notes |
 | --- | --- | --- | --- |
-| `dashboard-home` | Home (sections, no `path`), Entertainment, Map (sidebar), Deliveries | `Warm Home` (view-level) | Heaviest custom-card mix. First view has no stable path. |
+| `home-dashboard` (YAML: `dashboards/home.yaml`) | Home, Entertainment, Map, Deliveries (all sections) | `Walnut` (view-level) | Redesign of 2026-11-24. Not in storage: edit the YAML. |
+| `dashboard-home` | Home (sections, no `path`), Entertainment, Map (sidebar), Deliveries | `Warm Home` (view-level) | Heaviest custom-card mix. First view has no stable path. Being replaced by `home-dashboard`; kept as a fallback. |
 | `dashboard-security` | Overview, Cameras, Sensors & Health (all sections) | none set; hardcodes Warm Home colours (`#fefcf8`, `rgba(180,130,80,…)`) in ~40 `card_mod` blocks | Same Jinja dicts copy-pasted 3–4× per card. |
 | `dashboard-calendar` | Monthly (sections, no `path`), Daily (sidebar), Yearly To-Do (panel) | none | Calendar colours duplicated from `dashboard-home`'s atomic-calendar `card_mod`. |
 

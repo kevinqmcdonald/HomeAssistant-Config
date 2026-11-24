@@ -1,0 +1,106 @@
+######################################################################
+# -------------------------------------------------------------------
+# Home dashboard - Map view
+#  Where people, the car and tagged items are.
+#  One map (&map) in three heights: phone, tablet (up to 1100px high)
+#  and taller screens. Only one is visible at a time.
+# -------------------------------------------------------------------
+######################################################################
+
+title: Map
+path: map
+icon: mdi:map-marker-radius
+theme: Walnut
+type: sections
+max_columns: 4
+sections:
+  - type: grid
+    column_span: 3
+    cards:
+      - &map
+        type: map
+        theme_mode: dark
+        auto_fit: true
+        fit_zones: false
+        show_all: false
+        entities:
+          - entity: person.jordan_cassino
+            name: J
+          - entity: person.kevin_mcdonald
+            name: K
+          - entity: device_tracker.audi_car_position
+            name: Audi
+          - entity: device_tracker.briefcase
+          - entity: device_tracker.travel_pouch
+          - entity: device_tracker.golf_bag
+          - entity: device_tracker.kevin_car_keys
+        visibility:
+          - condition: screen
+            media_query: "(max-width: 1023px)"
+        grid_options:
+          columns: full
+          rows: 6
+      - <<: *map
+        visibility:
+          - condition: screen
+            media_query: "(min-width: 1024px) and (max-height: 1100px)"
+        grid_options:
+          columns: full
+          rows: 13
+      - <<: *map
+        visibility:
+          - condition: screen
+            media_query: "(min-width: 1024px) and (min-height: 1101px)"
+        grid_options:
+          columns: full
+          rows: 18
+
+  - type: grid
+    cards:
+      - type: heading
+        heading: Tracked
+      - type: tile
+        entity: person.kevin_mcdonald
+        name: Kevin
+        state_content: [state, last_changed]
+        grid_options:
+          columns: full
+      - type: tile
+        entity: person.jordan_cassino
+        name: Jordan
+        state_content: [state, last_changed]
+        grid_options:
+          columns: full
+      - type: tile
+        entity: device_tracker.audi_car_position
+        name: Audi
+        icon: mdi:car
+        state_content: [state, last_changed]
+        grid_options:
+          columns: full
+      - type: tile
+        entity: device_tracker.briefcase
+        name: Briefcase
+        icon: mdi:briefcase
+        state_content: [state, last_updated]
+        grid_options:
+          columns: full
+      - type: tile
+        entity: device_tracker.kevin_car_keys
+        name: Kevin's car keys
+        icon: mdi:key-chain
+        state_content: [state, last_updated]
+        grid_options:
+          columns: full
+      - type: tile
+        entity: device_tracker.travel_pouch
+        state_content: [state, last_updated]
+        grid_options:
+          columns: full
+      - type: tile
+        entity: device_tracker.golf_bag
+        name: Golf bag
+        icon: mdi:golf-tee
+        state_content: [state, last_updated]
+        grid_options:
+          columns: full

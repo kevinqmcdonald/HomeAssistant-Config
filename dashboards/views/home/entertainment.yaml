@@ -1,0 +1,84 @@
+######################################################################
+# -------------------------------------------------------------------
+# Home dashboard - Entertainment view
+#  Speakers, TVs and the Spotify pop-up.
+# -------------------------------------------------------------------
+######################################################################
+
+title: Entertainment
+path: entertainment
+icon: mdi:speaker-wireless
+theme: Walnut
+type: sections
+max_columns: 4
+sections:
+  - type: grid
+    column_span: 3
+    cards:
+      - type: heading
+        heading: Speakers
+      - type: tile
+        entity: media_player.kitchen_echo_dot
+        name: Kitchen
+        show_entity_picture: true
+        state_content: [media_artist, media_title]
+        features: &media_controls
+          - type: media-player-playback
+          - type: media-player-volume-slider
+        grid_options:
+          columns: 12
+      - type: tile
+        entity: media_player.primary_bedroom_echo_show_2
+        name: Primary Bedroom
+        show_entity_picture: true
+        state_content: [media_artist, media_title]
+        features: *media_controls
+        grid_options:
+          columns: 12
+      - type: tile
+        entity: media_player.office_echo_dot_2
+        name: Office
+        show_entity_picture: true
+        state_content: [media_artist, media_title]
+        features: *media_controls
+        grid_options:
+          columns: 12
+      - type: custom:button-card
+        template: wn_base
+        name: Open Spotify
+        icon: mdi:spotify
+        layout: icon_name
+        styles:
+          grid:
+            - grid-template-columns: max-content max-content
+            - justify-content: center
+            - column-gap: var(--wn-gap)
+          img_cell:
+            - width: var(--wn-icon-size)
+        tap_action:
+          action: fire-dom-event
+          browser_mod:
+            service: browser_mod.popup
+            data:
+              popup_card_id: spotify-browser
+        grid_options:
+          columns: full
+          rows: auto
+      - !include ../../components/partials/spotify_popup.yaml
+
+  - type: grid
+    cards:
+      - type: heading
+        heading: TVs
+      - type: tile
+        entity: media_player.living_room_tv
+        name: Living Room TV
+        features: *media_controls
+        grid_options:
+          columns: full
+      - type: tile
+        entity: media_player.primary_bedroom_tv
+        name: Primary Bedroom TV
+        features: *media_controls
+        grid_options:
+          columns: full

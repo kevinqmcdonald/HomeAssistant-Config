@@ -1,0 +1,41 @@
+######################################################################
+# -------------------------------------------------------------------
+# Outdoor conditions - UV index and air quality with a level word
+#  The state stays numeric so a tile's bar-gauge can draw it. The word
+#  (Low, Good...) is the `level` attribute, shown with state_content.
+#  In YAML because template helpers made in the UI can't set attributes.
+#  Source: the sensors behind weather.local_weather_tracker.
+# -------------------------------------------------------------------
+######################################################################
+template:
+  - sensor:
+      - name: "Outdoor UV index"
+        unique_id: outdoor_uv_index
+        icon: mdi:white-balance-sunny
+        state_class: measurement
+        state: "{{ states('sensor.local_weather_tracker_live_uv_index') | float(0) | round(1) }}"
+        availability: "{{ has_value('sensor.local_weather_tracker_live_uv_index') }}"
+        attributes:
+          level: >-
+            {% set uv = states('sensor.local_weather_tracker_live_uv_index') | float(0) %}
+            {% if uv <= 3 %}Low
+            {% elif uv <= 6 %}Moderate
+            {% elif uv <= 8 %}High
+            {% elif uv <= 11 %}Very High
+            {% else %}Extreme{% endif %}
+
+      - name: "Outdoor air quality"
+        unique_id: outdoor_air_quality
+        icon: mdi:air-filter
+        state_class: measurement
+        state: "{{ states('sensor.local_weather_tracker_air_quality') | int(0) }}"
+        availability: "{{ has_value('sensor.local_weather_tracker_air_quality') }}"
+        attributes:
+          level: >-
+            {% set aqi = states('sensor.local_weather_tracker_air_quality') | int(0) %}
+            {% if aqi <= 50 %}Good
+            {% elif aqi <= 100 %}Moderate
+            {% elif aqi <= 150 %}Slightly Unhealthy
+            {% elif aqi <= 200 %}Unhealthy
+            {% elif aqi <= 300 %}Very Unhealthy
+            {% else %}Hazardous{% endif %}

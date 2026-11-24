@@ -1,0 +1,15 @@
+######################################################################
+# -------------------------------------------------------------------
+# Home dashboard
+#  House status, entertainment, map and deliveries in the Walnut theme.
+#  Design: .claude/designs/2026-11-24-walnut-home.md
+#  Needs packages/outdoor_conditions.yaml (UV and air quality tiles).
+# -------------------------------------------------------------------
+######################################################################
+
+button_card_templates: !include components/button_card_templates.yaml
+views:
+  - !include views/home/home.yaml
+  - !include views/home/entertainment.yaml
+  - !include views/home/map.yaml
+  - !include views/home/deliveries.yaml
