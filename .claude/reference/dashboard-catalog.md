@@ -15,16 +15,15 @@ Suggesting a new HACS install is allowed, but call it out explicitly as a new de
 | url_path | Views | Theme | Notes |
 | --- | --- | --- | --- |
 | `home-dashboard` (YAML: `dashboards/home.yaml`) | Home, Entertainment, Map, Deliveries (all sections) | `Walnut` (view-level) | Redesign of 2026-11-24. Not in storage: edit the YAML. |
-| `dashboard-home` | Home (sections, no `path`), Entertainment, Map (sidebar), Deliveries | `Warm Home` (view-level) | Heaviest custom-card mix. First view has no stable path. Being replaced by `home-dashboard`; kept as a fallback. |
 | `dashboard-security` | Overview, Cameras, Sensors & Health (all sections) | none set; hardcodes Warm Home colours (`#fefcf8`, `rgba(180,130,80,…)`) in ~40 `card_mod` blocks | Same Jinja dicts copy-pasted 3–4× per card. |
-| `dashboard-calendar` | Monthly (sections, no `path`), Daily (sidebar), Yearly To-Do (panel) | none | Calendar colours duplicated from `dashboard-home`'s atomic-calendar `card_mod`. |
+| `dashboard-calendar` | Monthly (sections, no `path`), Daily (sidebar), Yearly To-Do (panel) | none | Calendar colours duplicated in `home-dashboard`'s atomic-calendar `card_mod`. |
 
 ## Themes (`themes/`)
 
 | Theme | Source | Notes |
 | --- | --- | --- |
-| **Walnut** | repo (`themes/walnut.yaml`) | **The house theme** (since 2026-11-23): dark-only, walnut photo, frosted tiles, Inter, blue/gold/tan. All tokens (`--wn-*`) are listed in the style guide. Currently applied only to the style sample on `dashboard-scratch`; the real dashboards switch over during the redesign. |
-| Warm Home | repo | Being replaced by Walnut. Still applied to `dashboard-home` and hardcoded into `dashboard-security`'s `card_mod` until the redesign. |
+| **Walnut** | repo (`themes/walnut.yaml`) | **The house theme** (since 2026-11-23): dark-only, walnut photo, frosted tiles, Inter, blue/gold/tan. All tokens (`--wn-*`) are listed in the style guide. Applied to `home-dashboard` (view-level); the other dashboards switch over during the redesign. |
+| Warm Home | repo | Being replaced by Walnut. Hardcoded into `dashboard-security`'s `card_mod` until its redesign. |
 | Luxury Gold, Material You, Soft Pastel | repo | Unused. |
 | nordic, nordic-blue | HACS (coltondick/nordic-theme-main) | Unused. |
 
